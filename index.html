@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kumpulan Do'a Berbagai Acara</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Font Amiri -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <style>
-        /* Font Arab Arabic Typesetting */
-        @font-face {
-            font-family: 'Arabic Typesetting';
-            src: local('Arabic Typesetting'), local('ArabicTypesetting'), local('Traditional Arabic');
-            font-display: swap;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -118,11 +115,6 @@
             background: rgba(255, 80, 80, 0.12);
             border-color: rgba(255, 80, 80, 0.4);
             color: #ff8080;
-        }
-
-        .btn-admin:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
         }
 
         /* Search Bar */
@@ -269,10 +261,13 @@
         }
 
         .prayer-card .card-preview {
-            font-size: 0.78rem;
+            font-family: 'Amiri', serif;
+            font-size: 1.05rem;
             color: rgba(238, 245, 255, 0.55);
-            margin-top: 6px;
-            line-height: 1.5;
+            margin-top: 8px;
+            line-height: 1.8;
+            direction: rtl;
+            text-align: right;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -348,44 +343,21 @@
             border: 1px solid rgba(255, 215, 120, 0.2);
         }
 
-        /* FONT ARAB - Arabic Typesetting */
+        /* FONT ARAB - Amiri */
         .modal-content .modal-arabic {
-            font-family: 'Arabic Typesetting', 'Traditional Arabic', 'Amiri', 'Scheherazade', serif;
-            font-size: 2rem;
-            line-height: 2.4;
+            font-family: 'Amiri', serif;
+            font-size: 1.8rem;
+            line-height: 2.6;
             text-align: right;
             direction: rtl;
-            color: #eef5ff;
+            color: #ffffff;
             margin-bottom: 20px;
-            padding: 18px;
+            padding: 20px;
             background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
+            border-radius: 14px;
             border-right: 3px solid #ffd966;
-            word-spacing: 6px;
-        }
-
-        .modal-content .modal-latin {
-            font-size: 0.85rem;
-            line-height: 1.7;
-            color: rgba(238, 245, 255, 0.85);
-            font-style: italic;
-            margin-bottom: 16px;
-            padding: 12px 16px;
-            background: rgba(255, 215, 120, 0.05);
-            border-radius: 10px;
-            border-left: 3px solid rgba(255, 215, 120, 0.5);
-        }
-
-        .modal-content .modal-arti {
-            font-size: 0.85rem;
-            line-height: 1.7;
-            color: rgba(238, 245, 255, 0.75);
-            margin-bottom: 16px;
-        }
-
-        .modal-content .modal-arti strong {
-            color: #ffd966;
-            font-weight: 600;
+            word-spacing: 4px;
+            white-space: pre-wrap;
         }
 
         .modal-content .modal-source {
@@ -442,8 +414,7 @@
         }
 
         .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group textarea {
             width: 100%;
             padding: 11px 14px;
             border-radius: 10px;
@@ -457,8 +428,7 @@
         }
 
         .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group textarea:focus {
             border-color: #ffd966;
             background: rgba(255, 255, 255, 0.08);
             box-shadow: 0 0 12px rgba(255, 215, 120, 0.15);
@@ -471,12 +441,12 @@
         }
 
         .form-group textarea.arabic-input {
-            font-family: 'Arabic Typesetting', 'Traditional Arabic', serif;
-            font-size: 1.6rem;
+            font-family: 'Amiri', serif;
+            font-size: 1.4rem;
             direction: rtl;
             text-align: right;
-            line-height: 2;
-            min-height: 100px;
+            line-height: 2.2;
+            min-height: 180px;
         }
 
         /* PIN Modal */
@@ -491,12 +461,12 @@
             align-items: center;
         }
 
-        .pin-modal.active .modal-content {
-            transform: translateY(0);
-        }
-
         .pin-modal .modal-content {
             transform: translateY(30px) scale(0.95);
+        }
+
+        .pin-modal.active .modal-content {
+            transform: translateY(0) scale(1);
         }
 
         .pin-icon {
@@ -614,7 +584,7 @@
 
         @media (max-width: 380px) {
             .app-header h1 { font-size: 1.1rem; }
-            .modal-content .modal-arabic { font-size: 1.6rem; line-height: 2.2; }
+            .modal-content .modal-arabic { font-size: 1.5rem; line-height: 2.3; }
         }
     </style>
 </head>
@@ -657,8 +627,6 @@
             <h2 class="modal-title" id="modalTitle">-</h2>
             <span class="modal-category" id="modalCategory">-</span>
             <div class="modal-arabic" id="modalArabic">-</div>
-            <div class="modal-latin" id="modalLatin">-</div>
-            <div class="modal-arti" id="modalArti">-</div>
             <div class="modal-source" id="modalSource">-</div>
             <div class="modal-actions" id="modalActions" style="display:none;">
                 <button class="btn-admin primary" id="editPrayerBtn" style="flex:1;">✏️ Edit</button>
@@ -673,7 +641,6 @@
             <button class="close-btn" id="closeForm">✕</button>
             <div class="modal-handle"></div>
             <h2 class="modal-title" id="formTitle">Tambah Do'a Baru</h2>
-            <p style="font-size:0.75rem;color:rgba(238,245,255,0.5);margin-bottom:16px;">Isi data do'a dengan lengkap.</p>
 
             <div class="form-group">
                 <label>Judul Do'a</label>
@@ -687,18 +654,8 @@
             </div>
 
             <div class="form-group">
-                <label>Teks Arab</label>
-                <textarea id="fArabic" class="arabic-input" placeholder="اكتب النص العربي هنا..."></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Latin (Transliterasi)</label>
-                <textarea id="fLatin" placeholder="Bacaan latin..."></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Arti / Terjemahan</label>
-                <textarea id="fArti" placeholder="Terjemahan dalam Bahasa Indonesia..."></textarea>
+                <label>Teks Arab (Lengkap)</label>
+                <textarea id="fArabic" class="arabic-input" placeholder="اكتب النص العربي هنا..." dir="rtl"></textarea>
             </div>
 
             <div class="form-group">
@@ -733,404 +690,328 @@
         // ============================================================
         // KONFIGURASI
         // ============================================================
-        const ADMIN_PIN = '123456'; // Ganti PIN di sini
-        const STORAGE_KEY = 'kumpulan_doa_data';
+        const ADMIN_PIN = '123456';
+        const STORAGE_KEY = 'kumpulan_doa_data_v2';
         const SESSION_KEY = 'kumpulan_doa_admin';
 
         // ============================================================
-        // DATA DEFAULT DO'A
+        // DATA DO'A LENGKAP (Arab only)
         // ============================================================
         const defaultPrayers = [
             {
                 id: 1,
                 title: "Bacaan Pembukaan Segala Acara",
                 category: "Pembukaan",
-                arabic: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ، وَالصَّلَاةُ وَالسَّلَامُ عَلَى أَشْرَفِ الْأَنْبِيَاءِ وَالْمُرْسَلِينَ، سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ. أَمَّا بَعْدُ",
-                latin: "Alhamdulillahi rabbil 'alamin, wash-shalatu was-salamu 'ala asyrafil anbiya'i wal mursalin, sayyidina Muhammadin wa 'ala alihi wa shahbihi ajma'in. Amma ba'du.",
-                arti: "Segala puji bagi Allah, Tuhan semesta alam. Shalawat dan salam semoga tercurah kepada Nabi dan Rasul paling mulia, junjungan kami Muhammad, beserta keluarga dan para sahabatnya semua. Amma ba'du.",
-                source: "HR. Abu Dawud"
+                arabic: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ، حَمْدًا يُوَافِي نِعَمَهُ وَيُكَافِئُ مَزِيدَهُ، يَا رَبَّنَا لَكَ الْحَمْدُ كَمَا يَنْبَغِي لِجَلَالِ وَجْهِكَ الْكَرِيمِ وَعَظِيمِ سُلْطَانِكَ.\n\nاللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِ سَيِّدِنَا مُحَمَّدٍ، صَلَاةً تُنْجِينَا بِهَا مِنْ جَمِيعِ الْأَهْوَالِ وَالْآفَاتِ، وَتَقْضِي لَنَا بِهَا جَمِيعَ الْحَاجَاتِ، وَتُطَهِّرُنَا بِهَا مِنْ جَمِيعِ السَّيِّئَاتِ، وَتَرْفَعُنَا بِهَا عِنْدَكَ أَعْلَى الدَّرَجَاتِ، وَتُبَلِّغُنَا بِهَا أَقْصَى الْغَايَاتِ، مِنْ جَمِيعِ الْخَيْرَاتِ فِي الْحَيَاةِ وَبَعْدَ الْمَمَاتِ.\n\nأَمَّا بَعْدُ، فَإِنَّ أَصْدَقَ الْحَدِيثِ كِتَابُ اللَّهِ، وَخَيْرَ الْهَدْيِ هَدْيُ مُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ، وَشَرَّ الْأُمُورِ مُحْدَثَاتُهَا، وَكُلَّ مُحْدَثَةٍ بِدْعَةٌ، وَكُلَّ بِدْعَةٍ ضَلَالَةٌ، وَكُلَّ ضَلَالَةٍ فِي النَّارِ.",
+                source: "HR. Abu Dawud & Tirmidzi"
             },
             {
                 id: 2,
                 title: "Mukadimah Taklim atau Pengajian",
                 category: "Pembukaan",
-                arabic: "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا، مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
-                latin: "Innal hamda lillahi nahmaduhu wa nasta'inuhu wa nastaghfiruhu wa na'udzu billahi min syururi anfusina wa min sayyi'ati a'malina, man yahdihillahu fala mudhilla lah wa man yudhlil fala hadiya lah.",
-                arti: "Sesungguhnya segala puji bagi Allah, kami memuji-Nya, memohon pertolongan dan ampunan-Nya. Kami berlindung kepada Allah dari keburukan diri kami dan kejelekan amal perbuatan kami. Barangsiapa yang diberi petunjuk oleh Allah, maka tidak ada yang dapat menyesatkannya, dan barangsiapa yang disesatkan, maka tidak ada yang dapat memberinya petunjuk.",
-                source: "HR. Muslim"
+                arabic: "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا، مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ.\n\nوَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ.\n\nيَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ.\n\nيَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمُ الَّذِي خَلَقَكُمْ مِنْ نَفْسٍ وَاحِدَةٍ وَخَلَقَ مِنْهَا زَوْجَهَا وَبَثَّ مِنْهُمَا رِجَالًا كَثِيرًا وَنِسَاءً ۚ وَاتَّقُوا اللَّهَ الَّذِي تَسَاءَلُونَ بِهِ وَالْأَرْحَامَ ۚ إِنَّ اللَّهَ كَانَ عَلَيْكُمْ رَقِيبًا.\n\nيَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَقُولُوا قَوْلًا سَدِيدًا، يُصْلِحْ لَكُمْ أَعْمَالَكُمْ وَيَغْفِرْ لَكُمْ ذُنُوبَكُمْ ۗ وَمَنْ يُطِعِ اللَّهَ وَرَسُولَهُ فَقَدْ فَازَ فَوْزًا عَظِيمًا.\n\nأَمَّا بَعْدُ.",
+                source: "HR. Muslim, QS. Ali Imran: 102, QS. An-Nisa: 1, QS. Al-Ahzab: 70-71"
             },
             {
                 id: 3,
                 title: "Mukadimah Acara Umum",
                 category: "Pembukaan",
-                arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ، الْحَمْدُ لِلَّهِ الَّذِي هَدَانَا لِهَٰذَا وَمَا كُنَّا لِنَهْتَدِيَ لَوْلَا أَنْ هَدَانَا اللَّهُ",
-                latin: "Bismillahir-rahmanir-rahim, alhamdulillahil-ladzi hadana lihadza wa ma kunna linahtadiya laula an hadanallah.",
-                arti: "Dengan menyebut nama Allah Yang Maha Pengasih lagi Maha Penyayang. Segala puji bagi Allah yang telah memberi kami petunjuk untuk ini, dan kami tidak akan mendapat petunjuk kalau bukan karena Allah yang memberi petunjuk kepada kami.",
+                arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ.\n\nالْحَمْدُ لِلَّهِ الَّذِي هَدَانَا لِهَٰذَا وَمَا كُنَّا لِنَهْتَدِيَ لَوْلَا أَنْ هَدَانَا اللَّهُ، لَقَدْ جَاءَتْ رُسُلُ رَبِّنَا بِالْحَقِّ.\n\nوَنُودُوا أَنْ تِلْكُمُ الْجَنَّةُ أُورِثْتُمُوهَا بِمَا كُنْتُمْ تَعْمَلُونَ.\n\nاللَّهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ.\n\nأَمَّا بَعْدُ.",
                 source: "QS. Al-A'raf: 43"
             },
             {
                 id: 4,
                 title: "Doa Acara Tasyakuran Segala Acara",
                 category: "Tasyakuran",
-                arabic: "اللَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ، اللَّهُمَّ أَكْثِرْ أَمْوَالَنَا وَأَوْلَادَنَا وَبَارِكْ لَنَا فِيمَا أَعْطَيْتَنَا",
-                latin: "Allahumma barik lana fima razaqtana wa qina 'adzaban-nar. Allahumma aktsir amwalana wa auladana wa barik lana fima a'thaitana.",
-                arti: "Ya Allah, berkahilah kami pada apa yang telah Engkau rezekikan kepada kami, dan jagalah kami dari siksa api neraka. Ya Allah, perbanyaklah harta dan anak-anak kami, dan berkahilah kami pada apa yang telah Engkau berikan kepada kami.",
-                source: "HR. Bukhari & Muslim"
+                arabic: "اللَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ.\n\nاللَّهُمَّ أَكْثِرْ أَمْوَالَنَا وَأَوْلَادَنَا وَبَارِكْ لَنَا فِيمَا أَعْطَيْتَنَا وَأَطِلْ أَعْمَارَنَا فِي طَاعَتِكَ.\n\nاللَّهُمَّ اجْعَلْ هَذَا الْجَمْعَ جَمْعًا مَرْحُومًا، وَتَفَرُّقَنَا مِنْ بَعْدِهِ تَفَرُّقًا مَعْصُومًا، وَلَا تَجْعَلْ فِينَا شَقِيًّا وَلَا مَحْرُومًا.\n\nرَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ.\n\nسُبْحَانَ رَبِّكَ رَبِّ الْعِزَّةِ عَمَّا يَصِفُونَ، وَسَلَامٌ عَلَى الْمُرْسَلِينَ، وَالْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ.",
+                source: "HR. Bukhari & Muslim, QS. Al-Baqarah: 201, QS. Ash-Shaffat: 180-182"
             },
             {
                 id: 5,
                 title: "Doa Acara Penyembelihan Hewan Qurban",
                 category: "Qurban",
-                arabic: "بِسْمِ اللَّهِ وَاللَّهُ أَكْبَرُ، اللَّهُمَّ هَذَا مِنْكَ وَلَكَ، تَقَبَّلْ مِنِّي",
-                latin: "Bismillahi wallahu akbar, Allahumma hadza minka wa laka, taqabbal minni.",
-                arti: "Dengan nama Allah dan Allah Maha Besar. Ya Allah, ini dari-Mu dan untuk-Mu, terimalah dariku.",
-                source: "HR. Muslim"
+                arabic: "بِسْمِ اللَّهِ وَاللَّهُ أَكْبَرُ.\n\nاللَّهُمَّ هَذَا مِنْكَ وَلَكَ، تَقَبَّلْ مِنِّي كَمَا تَقَبَّلْتَ مِنْ إِبْرَاهِيمَ خَلِيلِكَ، وَمِنْ مُحَمَّدٍ حَبِيبِكَ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ.\n\nاللَّهُمَّ تَقَبَّلْ مِنَّا هَذَا الْقُرْبَانَ، وَاجْعَلْهُ خَالِصًا لِوَجْهِكَ الْكَرِيمِ، وَسَبَبًا لِقُرْبِنَا مِنْكَ يَوْمَ الْقِيَامَةِ.\n\nاللَّهُمَّ اجْعَلْهُ فِدَاءً لَنَا مِنَ النَّارِ، وَشَفَاعَةً لَنَا عِنْدَكَ، وَبَرَكَةً فِي أَمْوَالِنَا وَأَنْفُسِنَا وَأَوْلَادِنَا.\n\nاللَّهُمَّ تَقَبَّلْ مِنَّا وَمِنْ وَالِدِينَا وَمِنْ جَمِيعِ الْمُسْلِمِينَ.",
+                source: "HR. Muslim, HR. Ahmad"
             },
             {
                 id: 6,
                 title: "Doa Tasyakuran Akikah",
                 category: "Akikah",
-                arabic: "اللَّهُمَّ احْفَظْهُ مِنْ شَرِّ الْجِنِّ وَالْإِنْسِ، اللَّهُمَّ بَارِكْ لَنَا فِي وَلَدِنَا وَاجْعَلْهُ مِنَ الصَّالِحِينَ",
-                latin: "Allahumma ihfazhhu min syarril jinni wal insi, Allahumma barik lana fi waladina waj'alhu minash-shalihin.",
-                arti: "Ya Allah, lindungilah ia dari kejahatan jin dan manusia. Ya Allah, berkahilah kami pada anak kami dan jadikanlah ia termasuk orang-orang yang shalih.",
-                source: "Doa Akikah"
+                arabic: "بِسْمِ اللَّهِ وَاللَّهُ أَكْبَرُ.\n\nاللَّهُمَّ احْفَظْ هَذَا الْمَوْلُودَ مِنْ شَرِّ الْجِنِّ وَالْإِنْسِ، وَمِنْ كُلِّ سُوءٍ وَآفَةٍ.\n\nاللَّهُمَّ بَارِكْ لَنَا فِي وَلَدِنَا، وَاجْعَلْهُ مِنَ الصَّالِحِينَ الْبَارِّينَ، وَاجْعَلْهُ قُرَّةَ عَيْنٍ لَنَا فِي الدُّنْيَا وَالْآخِرَةِ.\n\nاللَّهُمَّ اجْعَلْهُ مِنْ حَمَلَةِ كِتَابِكَ، وَمِنْ أَهْلِ طَاعَتِكَ، وَمِنَ الْمُقَرَّبِينَ عِنْدَكَ.\n\nاللَّهُمَّ احْفَظْهُ وَاحْفَظْ لَهُ وَالِدَيْهِ، وَبَارِكْ لَهُمَا فِيهِ.\n\nرَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا.",
+                source: "Doa Akikah, QS. Al-Furqan: 74"
             },
             {
                 id: 7,
                 title: "Doa Tasyakuran Khitan",
                 category: "Khitan",
-                arabic: "اللَّهُمَّ طَهِّرْ قَلْبَهُ وَحَصِّنْ فَرْجَهُ، وَبَارِكْ لَنَا فِيهِ",
-                latin: "Allahumma thahhir qalbahu wa hashshin farjahu, wa barik lana fihi.",
-                arti: "Ya Allah, sucikanlah hatinya dan jagalah kemaluannya, serta berkahilah kami padanya.",
-                source: "Doa Khitan"
+                arabic: "اللَّهُمَّ طَهِّرْ قَلْبَهُ مِنَ النِّفَاقِ وَالْحِقْدِ وَالْحَسَدِ، وَحَصِّنْ فَرْجَهُ مِنَ الْحَرَامِ.\n\nاللَّهُمَّ اجْعَلْهُ مِنْ عِبَادِكَ الصَّالِحِينَ، وَمِنَ الْمُقَرَّبِينَ، وَمِنْ أَهْلِ طَاعَتِكَ وَمَحَبَّتِكَ.\n\nاللَّهُمَّ بَارِكْ لَنَا فِيهِ، وَاجْعَلْهُ قُرَّةَ عَيْنٍ لِوَالِدَيْهِ، وَاجْعَلْهُ نَافِعًا لِدِينِهِ وَأُمَّتِهِ.\n\nاللَّهُمَّ اجْعَلْ هَذَا الْعَمَلَ خَالِصًا لِوَجْهِكَ الْكَرِيمِ، وَاجْعَلْهُ سَبَبًا لِطَهَارَةِ بَدَنِهِ وَقَلْبِهِ.\n\nرَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ.",
+                source: "Doa Khitan, QS. Al-Baqarah: 127"
             },
             {
                 id: 8,
                 title: "Doa Tasyakuran Lamaran/Khitbah",
                 category: "Pernikahan",
-                arabic: "بَارَكَ اللَّهُ لَكَ وَبَارَكَ عَلَيْكَ وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ",
-                latin: "Barakallahu laka wa baraka 'alaika wa jama'a bainakuma fi khair.",
-                arti: "Semoga Allah memberkahimu, dan semoga Allah melimpahkan berkah atasmu, dan semoga Allah mempersatukan kalian berdua dalam kebaikan.",
-                source: "HR. Tirmidzi"
+                arabic: "بَارَكَ اللَّهُ لَكَ وَبَارَكَ عَلَيْكَ وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ.\n\nاللَّهُمَّ بَارِكْ لَهُمَا وَبَارِكْ عَلَيْهِمَا وَاجْمَعْ بَيْنَهُمَا فِي خَيْرٍ.\n\nاللَّهُمَّ أَلِّفْ بَيْنَ قُلُوبِهِمَا، وَاجْعَلْ بَيْنَهُمَا مَوَدَّةً وَرَحْمَةً، وَاجْعَلْهُمَا مِنَ الْمُتَحَابِّينَ فِيكَ.\n\nاللَّهُمَّ وَفِّقْهُمَا لِمَا يُرْضِيكَ، وَاجْعَلْ هَذَا الزَّوَاجَ زَوَاجًا مُبَارَكًا، وَذُرِّيَّةً طَيِّبَةً.\n\nرَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا.",
+                source: "HR. Tirmidzi, HR. Abu Dawud, QS. Al-Furqan: 74"
             },
             {
                 id: 9,
                 title: "Doa Setelah Akad Nikah (Walimatul Urs)",
                 category: "Pernikahan",
-                arabic: "اللَّهُمَّ بَارِكْ لَهُمَا وَبَارِكْ عَلَيْهِمَا وَاجْمَعْ بَيْنَهُمَا فِي خَيْرٍ",
-                latin: "Allahumma barik lahuma wa barik 'alaihima wajma' bainahuma fi khair.",
-                arti: "Ya Allah, berkahilah keduanya, dan limpahkanlah berkah atas keduanya, dan satukanlah keduanya dalam kebaikan.",
-                source: "HR. Abu Dawud"
+                arabic: "بَارَكَ اللَّهُ لَكَ وَبَارَكَ عَلَيْكَ وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ.\n\nاللَّهُمَّ بَارِكْ لَهُمَا وَبَارِكْ عَلَيْهِمَا وَاجْمَعْ بَيْنَهُمَا فِي خَيْرٍ.\n\nاللَّهُمَّ اجْعَلْ هَذَا الْعَقْدَ عَقْدًا مُبَارَكًا، وَاجْعَلْ بَيْنَهُمَا مَوَدَّةً وَرَحْمَةً، وَارْزُقْهُمَا الذُّرِّيَّةَ الصَّالِحَةَ.\n\nاللَّهُمَّ أَسْعِدْهُمَا فِي الدُّنْيَا وَالْآخِرَةِ، وَاجْعَلْ بَيْتَهُمَا بَيْتَ سَكِينَةٍ وَمَوَدَّةٍ وَرَحْمَةٍ.\n\nاللَّهُمَّ وَفِّقْهُمَا لِطَاعَتِكَ، وَاجْعَلْهُمَا مِنْ عِبَادِكَ الصَّالِحِينَ.\n\nرَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ.",
+                source: "HR. Abu Dawud, QS. Ar-Rum: 21, QS. Al-Baqarah: 201"
             },
             {
                 id: 10,
                 title: "Doa Ketika Halal Bihalal",
                 category: "Halal Bihalal",
-                arabic: "اللَّهُمَّ اغْفِرْ لَنَا وَلِوَالِدِينَا وَلِجَمِيعِ الْمُسْلِمِينَ، وَتَقَبَّلْ مِنَّا وَمِنْهُمْ صَالِحَ الْأَعْمَالِ",
-                latin: "Allahummaghfir lana wa liwalidina wa lijami'il muslimin, wa taqabbal minna wa minhum shalihal a'mal.",
-                arti: "Ya Allah, ampunilah kami, orang tua kami, dan seluruh kaum muslimin. Terimalah amal shaleh dari kami dan dari mereka.",
-                source: "Doa Halal Bihalal"
+                arabic: "اللَّهُمَّ اغْفِرْ لَنَا وَلِوَالِدِينَا وَلِجَمِيعِ الْمُسْلِمِينَ وَالْمُسْلِمَاتِ، وَالْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ، الْأَحْيَاءِ مِنْهُمْ وَالْأَمْوَاتِ.\n\nاللَّهُمَّ تَقَبَّلْ مِنَّا وَمِنْهُمْ صَالِحَ الْأَعْمَالِ، وَاغْفِرْ لَنَا وَلَهُمُ الذُّنُوبَ وَالسَّيِّئَاتِ.\n\nاللَّهُمَّ اجْعَلْ هَذَا الْجَمْعَ جَمْعًا مَرْحُومًا، وَتَفَرُّقَنَا مِنْ بَعْدِهِ تَفَرُّقًا مَعْصُومًا، وَلَا تَجْعَلْ فِينَا شَقِيًّا وَلَا مَحْرُومًا.\n\nاللَّهُمَّ أَصْلِحْ ذَاتَ بَيْنِنَا، وَأَلِّفْ بَيْنَ قُلُوبِنَا، وَاهْدِنَا سُبُلَ السَّلَامِ.\n\nرَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ وَلَا تَجْعَلْ فِي قُلُوبِنَا غِلًّا لِلَّذِينَ آمَنُوا رَبَّنَا إِنَّكَ رَءُوفٌ رَحِيمٌ.",
+                source: "HR. Muslim, HR. Abu Dawud, QS. Al-Hasyr: 10"
             },
             {
                 id: 11,
                 title: "Doa Acara Takziah (Pemberangkatan Jenazah)",
                 category: "Takziah",
-                arabic: "اللَّهُمَّ اغْفِرْ لَهُ وَارْحَمْهُ وَعَافِهِ وَاعْفُ عَنْهُ، وَأَكْرِمْ نُزُلَهُ وَوَسِّعْ مُدْخَلَهُ",
-                latin: "Allahummaghfir lahu warhamhu wa 'afihi wa'fu 'anhu, wa akrim nuzulahu wa wassi' mudkhalahu.",
-                arti: "Ya Allah, ampunilah dia, rahmatilah dia, selamatkanlah dan maafkanlah dia. Muliakanlah tempat singgahnya dan luaskanlah tempat masuknya.",
-                source: "HR. Muslim"
+                arabic: "اللَّهُمَّ اغْفِرْ لَهُ وَارْحَمْهُ وَعَافِهِ وَاعْفُ عَنْهُ، وَأَكْرِمْ نُزُلَهُ وَوَسِّعْ مُدْخَلَهُ، وَاغْسِلْهُ بِالْمَاءِ وَالثَّلْجِ وَالْبَرَدِ، وَنَقِّهِ مِنَ الْخَطَايَا كَمَا يُنَقَّى الثَّوْبُ الْأَبْيَضُ مِنَ الدَّنَسِ.\n\nاللَّهُمَّ أَبْدِلْهُ دَارًا خَيْرًا مِنْ دَارِهِ، وَأَهْلًا خَيْرًا مِنْ أَهْلِهِ، وَأَدْخِلْهُ الْجَنَّةَ، وَأَعِذْهُ مِنْ عَذَابِ الْقَبْرِ وَمِنْ عَذَابِ النَّارِ.\n\nاللَّهُمَّ اجْعَلْ قَبْرَهُ رَوْضَةً مِنْ رِيَاضِ الْجَنَّةِ، وَلَا تَجْعَلْهُ حُفْرَةً مِنْ حُفَرِ النِّيرَانِ.\n\nاللَّهُمَّ ثَبِّتْهُ عِنْدَ السُّؤَالِ، وَاجْعَلْ لِسَانَهُ نَاطِقًا بِالْحَقِّ، وَقَلْبَهُ مُطْمَئِنًّا بِالْإِيمَانِ.\n\nاللَّهُمَّ اجْعَلْهُ مِنَ الْمُبَشَّرِينَ بِالْجَنَّةِ، وَمِنَ الْمَغْفُورِ لَهُمْ، وَمِنْ عِبَادِكَ الصَّالِحِينَ.\n\nرَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ.",
+                source: "HR. Muslim, QS. Al-Hasyr: 10"
             },
             {
                 id: 12,
                 title: "Doa Setelah Penguburan Jenazah",
                 category: "Takziah",
-                arabic: "اللَّهُمَّ ثَبِّتْهُ بِالْقَوْلِ الثَّابِتِ فِي الْحَيَاةِ الدُّنْيَا وَفِي الْآخِرَةِ",
-                latin: "Allahumma tsabbit-hu bil qaulits-tsabiti fil hayatid-dunya wa fil akhirah.",
-                arti: "Ya Allah, tetapkanlah dia dengan perkataan yang teguh di kehidupan dunia dan di akhirat.",
-                source: "QS. Ibrahim: 27"
+                arabic: "اللَّهُمَّ ثَبِّتْهُ بِالْقَوْلِ الثَّابِتِ فِي الْحَيَاةِ الدُّنْيَا وَفِي الْآخِرَةِ.\n\nاللَّهُمَّ اغْفِرْ لَهُ وَارْحَمْهُ، وَاجْعَلْ قَبْرَهُ مَرْقَدًا مِنْ مَرَاقِدِ الْجَنَّةِ.\n\nاللَّهُمَّ آنِسْ وَحْدَتَهُ، وَارْحَمْ غُرْبَتَهُ، وَاجْعَلْ قَبْرَهُ نُورًا وَسِعَةً.\n\nاللَّهُمَّ اجْعَلْ عَمَلَهُ الصَّالِحَ رَفِيقًا لَهُ فِي قَبْرِهِ، وَاجْعَلْ لَهُ فِي قَبْرِهِ رَوْضَةً مِنْ رِيَاضِ الْجَنَّةِ.\n\nاللَّهُمَّ ارْحَمْ أَهْلَهُ وَذَوِيهِ، وَاجْبُرْ مُصِيبَتَهُمْ، وَأَحْسِنْ عَزَاءَهُمْ.\n\nرَبَّنَا لَا تُؤَاخِذْنَا إِنْ نَسِينَا أَوْ أَخْطَأْنَا.",
+                source: "QS. Ibrahim: 27, HR. Muslim, QS. Al-Baqarah: 286"
             },
             {
                 id: 13,
                 title: "Doa Khotbah Shalat Gerhana Bulan",
                 category: "Gerhana",
-                arabic: "إِنَّ الشَّمْسَ وَالْقَمَرَ آيَتَانِ مِنْ آيَاتِ اللَّهِ، لَا يَخْسِفَانِ لِمَوْتِ أَحَدٍ وَلَا لِحَيَاتِهِ، فَإِذَا رَأَيْتُمْ ذَلِكَ فَاذْكُرُوا اللَّهَ",
-                latin: "Innasy-syamsa wal qamara ayatani min ayatillah, la yakhsifani limauti ahadin wa la lihayatihi, fa idza ra'aitum dzalika fadzkurullah.",
-                arti: "Sesungguhnya matahari dan bulan adalah dua tanda dari tanda-tanda kebesaran Allah. Keduanya tidak mengalami gerhana karena kematian atau kehidupan seseorang. Maka apabila kamu melihat hal itu, berdzikirlah kepada Allah.",
-                source: "HR. Bukhari & Muslim"
+                arabic: "إِنَّ الشَّمْسَ وَالْقَمَرَ آيَتَانِ مِنْ آيَاتِ اللَّهِ، لَا يَخْسِفَانِ لِمَوْتِ أَحَدٍ وَلَا لِحَيَاتِهِ، فَإِذَا رَأَيْتُمْ ذَلِكَ فَاذْكُرُوا اللَّهَ، وَكَبِّرُوا، وَصَلُّوا، وَتَصَدَّقُوا.\n\nاللَّهُمَّ إِنَّا نَعُوذُ بِكَ مِنْ شُرُورِ أَعْمَالِنَا، وَمِنْ سَيِّئَاتِ أَنْفُسِنَا.\n\nاللَّهُمَّ اغْفِرْ لَنَا وَلِوَالِدِينَا، وَتَقَبَّلْ صَالِحَ أَعْمَالِنَا، وَاشْرَحْ صُدُورَنَا لِذِكْرِكَ.\n\nاللَّهُمَّ أَعِذْنَا مِنْ عَذَابِ الْقَبْرِ، وَمِنْ عَذَابِ النَّارِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ.\n\nاللَّهُمَّ آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ.",
+                source: "HR. Bukhari & Muslim, QS. Al-Baqarah: 201"
             },
             {
                 id: 14,
                 title: "Doa Khotbah Shalat Gerhana Matahari",
                 category: "Gerhana",
-                arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ",
-                latin: "Allahumma inni as'alukal 'afwa wal 'afiyata fid dunya wal akhirah.",
-                arti: "Ya Allah, aku memohon kepada-Mu ampunan dan keselamatan di dunia dan akhirat.",
-                source: "HR. Abu Dawud"
+                arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي.\n\nاللَّهُمَّ اسْتُرْ عَوْرَاتِي، وَآمِنْ رَوْعَاتِي، وَاحْفَظْنِي مِنْ بَيْنِ يَدَيَّ وَمِنْ خَلْفِي، وَعَنْ يَمِينِي وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي.\n\nاللَّهُمَّ اغْفِرْ لِي ذَنْبِي، وَاجْلُ قَلْبِي، وَحَصِّنْ فَرْجِي.\n\nاللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ فِتْنَةِ الْقَبْرِ، وَمِنْ شَرِّ فِتْنَةِ الْغِنَى، وَمِنْ شَرِّ فِتْنَةِ الْفَقْرِ.",
+                source: "HR. Abu Dawud, HR. Muslim"
             },
             {
                 id: 15,
                 title: "Doa Qunut Subuh",
                 category: "Shalat",
-                arabic: "اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ، وَعَافِنِي فِيمَنْ عَافَيْتَ، وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ، وَبَارِكْ لِي فِيمَا أَعْطَيْتَ، وَقِنِي شَرَّ مَا قَضَيْتَ",
-                latin: "Allahummahdini fiman hadait, wa 'afini fiman 'afait, wa tawallani fiman tawallait, wa barik li fima a'thait, wa qini syarra ma qadhait.",
-                arti: "Ya Allah, berilah aku petunjuk seperti orang-orang yang telah Engkau beri petunjuk. Berilah aku kesehatan seperti orang yang telah Engkau beri kesehatan. Peliharalah aku seperti orang-orang yang telah Engkau pelihara. Berkahilah aku pada apa yang telah Engkau berikan. Dan lindungilah aku dari kejahatan yang telah Engkau tetapkan.",
-                source: "HR. Tirmidzi"
+                arabic: "اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ، وَعَافِنِي فِيمَنْ عَافَيْتَ، وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ، وَبَارِكْ لِي فِيمَا أَعْطَيْتَ، وَقِنِي شَرَّ مَا قَضَيْتَ، فَإِنَّكَ تَقْضِي وَلَا يُقْضَى عَلَيْكَ، وَإِنَّهُ لَا يَذِلُّ مَنْ وَالَيْتَ، وَلَا يَعِزُّ مَنْ عَادَيْتَ، تَبَارَكْتَ رَبَّنَا وَتَعَالَيْتَ.\n\nفَلَكَ الْحَمْدُ عَلَى مَا قَضَيْتَ، أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ.\n\nوَصَلَّى اللَّهُ عَلَى سَيِّدِنَا مُحَمَّدٍ النَّبِيِّ الْأُمِّيِّ وَعَلَى آلِهِ وَصَحْبِهِ وَسَلَّمَ.",
+                source: "HR. Tirmidzi, HR. An-Nasa'i"
             },
             {
                 id: 16,
                 title: "Doa dalam Acara Keislaman Seseorang",
                 category: "Keislaman",
-                arabic: "اللَّهُمَّ ثَبِّتْ قَلْبَهُ عَلَى دِينِكَ، وَاجْعَلْهُ مِنَ الْمُهْتَدِينَ",
-                latin: "Allahumma tsabbit qalbahu 'ala dinik, waj'alhu minal muhtadin.",
-                arti: "Ya Allah, tetapkanlah hatinya pada agama-Mu, dan jadikanlah ia termasuk orang-orang yang mendapat petunjuk.",
-                source: "Doa Keislaman"
+                arabic: "اللَّهُمَّ ثَبِّتْ قَلْبَهُ عَلَى دِينِكَ، وَاجْعَلْهُ مِنَ الْمُهْتَدِينَ.\n\nاللَّهُمَّ اجْعَلِ الْإِيمَانَ عَزِيزًا فِي قَلْبِهِ، وَحَبِّبْ إِلَيْهِ الْإِيمَانَ وَزَيِّنْهُ فِي قَلْبِهِ.\n\nاللَّهُمَّ بَغِّضْ إِلَيْهِ الْكُفْرَ وَالْفُسُوقَ وَالْعِصْيَانَ، وَاجْعَلْهُ مِنَ الرَّاشِدِينَ.\n\nاللَّهُمَّ اجْعَلْهُ مِنْ عِبَادِكَ الصَّالِحِينَ، وَمِنَ الْمُقَرَّبِينَ، وَمِنْ أَهْلِ طَاعَتِكَ.\n\nاللَّهُمَّ بَارِكْ لَهُ فِي حَيَاتِهِ، وَاجْعَلْ خَاتِمَتَهُ حُسْنَ الْخَاتِمَةِ.\n\nرَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِنْ لَدُنْكَ رَحْمَةً إِنَّكَ أَنْتَ الْوَهَّابُ.",
+                source: "Doa Keislaman, QS. Ali Imran: 8"
             },
             {
                 id: 17,
                 title: "Doa Qunut Nazilah",
                 category: "Shalat",
-                arabic: "اللَّهُمَّ إِنَّا نَسْتَعِينُكَ وَنَسْتَغْفِرُكَ وَنُثْنِي عَلَيْكَ وَلَا نَكْفُرُكَ، وَنَخْلَعُ وَنَتْرُكُ مَنْ يَفْجُرُكَ",
-                latin: "Allahumma inna nasta'inuka wa nastaghfiruka wa nutsni 'alaika wa la nakfuruk, wa nakhla'u wa natruku man yafjuruk.",
-                arti: "Ya Allah, kami memohon pertolongan-Mu, memohon ampunan-Mu, memuji-Mu, tidak mengingkari-Mu, dan kami lepaskan serta tinggalkan orang yang durhaka kepada-Mu.",
-                source: "HR. Bukhari"
+                arabic: "اللَّهُمَّ إِنَّا نَسْتَعِينُكَ وَنَسْتَغْفِرُكَ وَنُثْنِي عَلَيْكَ وَلَا نَكْفُرُكَ، وَنَخْلَعُ وَنَتْرُكُ مَنْ يَفْجُرُكَ.\n\nاللَّهُمَّ إِيَّاكَ نَعْبُدُ، وَلَكَ نُصَلِّي وَنَسْجُدُ، وَلَكَ نَسْعَى وَنَحْفِدُ، وَنَرْجُو رَحْمَتَكَ، وَنَخْشَى عَذَابَكَ، إِنَّ عَذَابَكَ بِالْكُفَّارِ مُلْحِقٌ.\n\nاللَّهُمَّ عَذِّبِ الْكَفَرَةَ وَالْمُشْرِكِينَ الَّذِينَ يَصُدُّونَ عَنْ سَبِيلِكَ، وَيُكَذِّبُونَ رُسُلَكَ، وَيُقَاتِلُونَ أَوْلِيَاءَكَ.\n\nاللَّهُمَّ خَالِفْ بَيْنَ كَلِمَاتِهِمْ، وَزَلْزِلْ أَقْدَامَهُمْ، وَأَنْزِلْ بِهِمْ بَأْسَكَ الَّذِي لَا تُرَدُّ عَنِ الْقَوْمِ الْمُجْرِمِينَ.\n\nاللَّهُمَّ أَنْجِ الْمُسْتَضْعَفِينَ مِنَ الْمُؤْمِنِينَ، وَارْفَعْ عَنْهُمْ، وَاشْفِ مَرْضَاهُمْ، وَارْحَمْ مَوْتَاهُمْ.",
+                source: "HR. Bukhari, HR. Tirmidzi"
             },
             {
                 id: 18,
                 title: "Doa Melepas Keberangkatan Jamaah Haji",
                 category: "Haji",
-                arabic: "اللَّهُمَّ احْفَظْهُمْ فِي سَفَرِهِمْ وَأَعِنْهُمْ عَلَى أَدَاءِ مَنَاسِكِهِمْ وَتَقَبَّلْ مِنْهُمْ",
-                latin: "Allahumma ihfazhhum fi safarihim wa a'in-hum 'ala ada'i manasikihim wa taqabbal minhum.",
-                arti: "Ya Allah, lindungilah mereka dalam perjalanan mereka, bantulah mereka dalam melaksanakan manasik haji, dan terimalah amal mereka.",
-                source: "Doa Haji"
+                arabic: "اللَّهُمَّ احْفَظْهُمْ فِي سَفَرِهِمْ، وَأَعِنْهُمْ عَلَى أَدَاءِ مَنَاسِكِهِمْ، وَتَقَبَّلْ مِنْهُمْ.\n\nاللَّهُمَّ يَسِّرْ لَهُمْ كُلَّ عَسِيرٍ، وَسَهِّلْ لَهُمْ كُلَّ صَعْبٍ، وَوَفِّقْهُمْ لِمَا تُحِبُّ وَتَرْضَى.\n\nاللَّهُمَّ اجْعَلْ حَجَّهُمْ حَجًّا مَبْرُورًا، وَسَعْيَهُمْ سَعْيًا مَشْكُورًا، وَذَنْبَهُمْ ذَنْبًا مَغْفُورًا.\n\nاللَّهُمَّ ارْزُقْهُمْ صِحَّةً فِي الْبَدَنِ، وَسَلَامَةً فِي الْفِكْرِ، وَطُمَأْنِينَةً فِي الْقَلْبِ.\n\nاللَّهُمَّ رُدَّهُمْ إِلَى أَهْلِيهِمْ سَالِمِينَ غَانِمِينَ، وَاجْعَلْهُمْ مِنَ الْحَاجِّينَ الْمَقْبُولِينَ.\n\nاللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ.",
+                source: "Doa Safar, HR. Abu Dawud"
             },
             {
                 id: 19,
                 title: "Doa Menyambut Kepulangan Jamaah Haji",
                 category: "Haji",
-                arabic: "الْحَمْدُ لِلَّهِ الَّذِي رَدَّكَ إِلَى أَهْلِكَ سَالِمًا غَانِمًا، تَقَبَّلَ اللَّهُ حَجَّكَ وَسَعْيَكَ",
-                latin: "Alhamdulillahil-ladzi raddaka ila ahlika saliman ghaniman, taqabbalallahu hajjaka wa sa'yaka.",
-                arti: "Segala puji bagi Allah yang telah mengembalikanmu kepada keluargamu dengan selamat dan beruntung. Semoga Allah menerima haji dan sa'i-mu.",
-                source: "Doa Haji"
+                arabic: "الْحَمْدُ لِلَّهِ الَّذِي رَدَّكَ إِلَى أَهْلِكَ سَالِمًا غَانِمًا، تَقَبَّلَ اللَّهُ حَجَّكَ وَسَعْيَكَ، وَغَفَرَ ذَنْبَكَ.\n\nاللَّهُمَّ اجْعَلْ حَجَّهُ حَجًّا مَبْرُورًا، وَسَعْيَهُ سَعْيًا مَشْكُورًا، وَذَنْبَهُ ذَنْبًا مَغْفُورًا.\n\nاللَّهُمَّ اجْعَلْهُ مِنْ عِبَادِكَ الصَّالِحِينَ، وَمِنَ الْمُتَقِينَ، وَمِنَ الْحَاجِّينَ الْمَقْبُولِينَ.\n\nاللَّهُمَّ بَارِكْ لَهُ فِي حَيَاتِهِ، وَاجْعَلْ خَاتِمَتَهُ حُسْنَ الْخَاتِمَةِ.\n\nاللَّهُمَّ ارْزُقْنَا حَجَّ بَيْتِكَ الْحَرَامِ، وَزِيَارَةَ مَسْجِدِ نَبِيِّكَ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ.",
+                source: "Doa Haji, HR. Bukhari"
             },
             {
                 id: 20,
                 title: "Doa Setelah Shalat Istisqa",
                 category: "Shalat",
-                arabic: "اللَّهُمَّ أَغِثْنَا، اللَّهُمَّ أَغِثْنَا، اللَّهُمَّ أَغِثْنَا",
-                latin: "Allahumma aghitsna, Allahumma aghitsna, Allahumma aghitsna.",
-                arti: "Ya Allah, turunkanlah hujan kepada kami. Ya Allah, turunkanlah hujan kepada kami. Ya Allah, turunkanlah hujan kepada kami.",
-                source: "HR. Bukhari & Muslim"
+                arabic: "اللَّهُمَّ أَغِثْنَا، اللَّهُمَّ أَغِثْنَا، اللَّهُمَّ أَغِثْنَا.\n\nاللَّهُمَّ اسْقِنَا غَيْثًا مُغِيثًا، مَرِيئًا مَرِيعًا، نَافِعًا غَيْرَ ضَارٍّ، عَاجِلًا غَيْرَ آجِلٍ.\n\nاللَّهُمَّ اسْقِنَا الْغَيْثَ وَلَا تَجْعَلْنَا مِنَ الْقَانِطِينَ، وَاجْعَلْ فِينَا مِنَ الشَّاكِرِينَ.\n\nاللَّهُمَّ أَنْزِلْ عَلَيْنَا مِنْ بَرَكَاتِ السَّمَاءِ، وَأَخْرِجْ لَنَا مِنْ بَرَكَاتِ الْأَرْضِ.\n\nاللَّهُمَّ اجْعَلْ هَذَا الْغَيْثَ غَيْثَ خَيْرٍ وَبَرَكَةٍ، وَسَبَبًا لِخِصْبِ الْبِلَادِ وَرَخَاءِ الْعِبَادِ.",
+                source: "HR. Bukhari & Muslim, HR. Abu Dawud"
             },
             {
                 id: 21,
                 title: "Doa Istighatsah",
                 category: "Shalat",
-                arabic: "اللَّهُمَّ إِنَّا نَسْأَلُكَ بِأَنَّكَ أَنْتَ اللَّهُ الْأَحَدُ الصَّمَدُ الَّذِي لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ",
-                latin: "Allahumma inna nas'aluka bi'annaka antallahul ahadush-shamadul-ladzi lam yalid wa lam yulad wa lam yakun lahu kufuwan ahad.",
-                arti: "Ya Allah, kami memohon kepada-Mu, karena Engkaulah Allah Yang Maha Esa, Yang Maha Dibutuhkan, yang tidak melahirkan dan tidak dilahirkan, dan tidak ada sesuatu pun yang setara dengan-Nya.",
-                source: "HR. Bukhari"
+                arabic: "اللَّهُمَّ إِنَّا نَسْأَلُكَ بِأَنَّكَ أَنْتَ اللَّهُ الْأَحَدُ الصَّمَدُ الَّذِي لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ.\n\nاللَّهُمَّ إِنَّا نَسْأَلُكَ بِأَنَّكَ أَنْتَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ الرَّحْمَٰنُ الرَّحِيمُ.\n\nاللَّهُمَّ إِنَّا نَسْأَلُكَ بِأَنَّكَ أَنْتَ الْمَلِكُ الْقُدُّوسُ السَّلَامُ الْمُؤْمِنُ الْمُهَيْمِنُ الْعَزِيزُ الْجَبَّارُ الْمُتَكَبِّرُ.\n\nاللَّهُمَّ إِنَّا نَسْأَلُكَ بِأَنَّكَ أَنْتَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ لَهُ الْأَسْمَاءُ الْحُسْنَى.\n\nاللَّهُمَّ إِنَّا نَسْأَلُكَ بِكُلِّ اسْمٍ سَمَّيْتَ بِهِ نَفْسَكَ، أَوْ أَنْزَلْتَهُ فِي كِتَابِكَ، أَوْ عَلَّمْتَهُ أَحَدًا مِنْ خَلْقِكَ، أَوِ اسْتَأْثَرْتَ بِهِ فِي عِلْمِ الْغَيْبِ عِنْدَكَ.\n\nاللَّهُمَّ اجْعَلْ لَنَا مِنْ كُلِّ هَمٍّ فَرَجًا، وَمِنْ كُلِّ ضِيقٍ مَخْرَجًا، وَمِنْ كُلِّ بَلَاءٍ عَافِيَةً.",
+                source: "HR. Bukhari, HR. Ahmad"
             },
             {
                 id: 22,
                 title: "Doa Saat Kehamilan",
                 category: "Keluarga",
-                arabic: "اللَّهُمَّ احْفَظْ وَلَدِي مَا دَامَ فِي بَطْنِي، وَاشْفِهِ وَعَافِهِ، وَأَخْرِجْهُ إِلَى الدُّنْيَا سَالِمًا",
-                latin: "Allahumma ihfazh waladi ma dama fi bathni, washfihi wa 'afihi, wa akhrijhu ilad-dunya saliman.",
-                arti: "Ya Allah, lindungilah anakku selama berada dalam perutku, sehatkanlah dan selamatkanlah dia, dan keluarkanlah dia ke dunia dengan selamat.",
-                source: "Doa Kehamilan"
+                arabic: "اللَّهُمَّ احْفَظْ وَلَدِي مَا دَامَ فِي بَطْنِي، وَاشْفِهِ وَعَافِهِ، وَأَخْرِجْهُ إِلَى الدُّنْيَا سَالِمًا.\n\nاللَّهُمَّ اجْعَلْهُ مِنَ الصَّالِحِينَ، وَمِنْ حَمَلَةِ كِتَابِكَ، وَمِنْ أَهْلِ طَاعَتِكَ.\n\nاللَّهُمَّ سَهِّلْ لِي حَمْلَهُ وَوِلَادَتَهُ، وَاجْعَلْهُ قُرَّةَ عَيْنٍ لِي وَلِوَالِدِهِ.\n\nاللَّهُمَّ ارْزُقْنِي صِحَّةً وَعَافِيَةً، وَقُوَّةً فِي الْبَدَنِ، وَطُمَأْنِينَةً فِي الْقَلْبِ.\n\nاللَّهُمَّ اجْعَلْهُ ذُرِّيَّةً طَيِّبَةً، وَبَارِكْ لِي فِيهِ.\n\nرَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا.",
+                source: "Doa Kehamilan, QS. Al-Furqan: 74"
             },
             {
                 id: 23,
                 title: "Doa Saat Proses Kelahiran",
                 category: "Keluarga",
-                arabic: "اللَّهُمَّ يَسِّرْ وِلَادَتَهَا وَاحْفَظْ وَلَدَهَا وَعَافِهَا",
-                latin: "Allahumma yassir wiladataha wahfazh waladaha wa 'afiha.",
-                arti: "Ya Allah, mudahkanlah proses kelahirannya, lindungilah anaknya, dan sehatkanlah dia.",
-                source: "Doa Kelahiran"
+                arabic: "اللَّهُمَّ يَسِّرْ وِلَادَتَهَا، وَاحْفَظْ وَلَدَهَا، وَعَافِهَا.\n\nاللَّهُمَّ اجْعَلْ وِلَادَتَهَا وِلَادَةً سَهْلَةً، لَا عُسْرَ فِيهَا، وَلَا ضَرَرَ.\n\nاللَّهُمَّ احْفَظِ الْأُمَّ وَالْوَلَدَ مِنْ كُلِّ سُوءٍ وَآفَةٍ، وَاجْعَلْهُمَا فِي حِفْظِكَ وَأَمَانِكَ.\n\nاللَّهُمَّ ارْزُقْهُمَا الصِّحَّةَ وَالْعَافِيَةَ، وَاجْعَلِ الْوَلَدَ مِنَ الصَّالِحِينَ.\n\nاللَّهُمَّ كُنْ مَعَهُمَا فِي هَذِهِ اللَّحْظَةِ، وَأَعِنْهُمَا بِقُدْرَتِكَ.\n\nحَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ، نِعْمَ الْمَوْلَى وَنِعْمَ النَّصِيرُ.",
+                source: "Doa Kelahiran, QS. Ali Imran: 173"
             },
             {
                 id: 24,
                 title: "Doa Melepas Safar Seseorang",
                 category: "Perjalanan",
-                arabic: "أَسْتَوْدِعُكَ اللَّهَ الَّذِي لَا يَضِيعُ وَدَائِعُهُ",
-                latin: "Astawdi'ukallaha al-ladzi la yadhi'u wada'i'uhu.",
-                arti: "Aku menitipkanmu kepada Allah yang tidak akan menyia-nyiakan titipan-Nya.",
-                source: "HR. Ahmad"
+                arabic: "أَسْتَوْدِعُكَ اللَّهَ الَّذِي لَا يَضِيعُ وَدَائِعُهُ.\n\nاللَّهُمَّ احْفَظْهُ فِي سَفَرِهِ، وَأَعِنْهُ عَلَى مَا يُرِيدُ، وَيَسِّرْ لَهُ كُلَّ عَسِيرٍ.\n\nاللَّهُمَّ اجْعَلْ سَفَرَهُ سَفَرَ خَيْرٍ وَبَرَكَةٍ، وَرُدَّهُ إِلَى أَهْلِهِ سَالِمًا غَانِمًا.\n\nاللَّهُمَّ ارْزُقْهُ صِحَّةً فِي الْبَدَنِ، وَسَلَامَةً فِي الْفِكْرِ، وَطُمَأْنِينَةً فِي الْقَلْبِ.\n\nاللَّهُمَّ اجْعَلْهُ فِي حِفْظِكَ وَأَمَانِكَ، وَلَا تَكِلْهُ إِلَى نَفْسِهِ طَرْفَةَ عَيْنٍ.\n\nسُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ.",
+                source: "HR. Ahmad, QS. Az-Zukhruf: 13-14"
             },
             {
                 id: 25,
                 title: "Doa Peresmian Masjid",
                 category: "Bangunan",
-                arabic: "اللَّهُمَّ اجْعَلْ هَذَا الْمَسْجِدَ بَيْتًا لَكَ، وَمَكَانًا لِذِكْرِكَ، وَاجْعَلْنَا مِنْ عُمَّارِهِ",
-                latin: "Allahummaj'al hadzal masjida baitan laka, wa makanan lidzikrika, waj'alna min 'ummarin.",
-                arti: "Ya Allah, jadikanlah masjid ini sebagai rumah-Mu, tempat untuk berdzikir kepada-Mu, dan jadikanlah kami termasuk orang-orang yang memakmurkannya.",
-                source: "Doa Masjid"
+                arabic: "اللَّهُمَّ اجْعَلْ هَذَا الْمَسْجِدَ بَيْتًا لَكَ، وَمَكَانًا لِذِكْرِكَ، وَاجْعَلْنَا مِنْ عُمَّارِهِ.\n\nاللَّهُمَّ بَارِكْ لَنَا فِي هَذَا الْمَسْجِدِ، وَاجْعَلْهُ مَكَانًا لِلطَّاعَةِ وَالْعِبَادَةِ.\n\nاللَّهُمَّ اجْعَلْهُ مَنْبَرًا لِلْعِلْمِ وَالْهُدَى، وَمَكَانًا لِتَعْلِيمِ كِتَابِكَ وَسُنَّةِ نَبِيِّكَ.\n\nاللَّهُمَّ اجْعَلْ فِيهِ مِنَ الْمُؤْمِنِينَ رِجَالًا يَذْكُرُونَكَ كَثِيرًا، وَيُقِيمُونَ الصَّلَاةَ، وَيُؤْتُونَ الزَّكَاةَ.\n\nاللَّهُمَّ اجْعَلْنَا مِنَ الْمُقِيمِينَ لِلصَّلَاةِ، وَمِنَ الْمُؤْمِنِينَ الْخَاشِعِينَ.\n\nرَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ.",
+                source: "Doa Masjid, QS. Al-Baqarah: 127"
             },
             {
                 id: 26,
                 title: "Doa untuk Rumah Baru",
                 category: "Bangunan",
-                arabic: "اللَّهُمَّ بَارِكْ لَنَا فِي بَيْتِنَا هَذَا، وَاجْعَلْهُ مَكَانًا لِلْخَيْرِ وَالسَّكِينَةِ",
-                latin: "Allahumma barik lana fi baitina hadza, waj'alhu makanan lil khairi was-sakinah.",
-                arti: "Ya Allah, berkahilah kami di rumah kami ini, dan jadikanlah ia tempat kebaikan dan ketenangan.",
-                source: "Doa Rumah"
+                arabic: "اللَّهُمَّ بَارِكْ لَنَا فِي بَيْتِنَا هَذَا، وَاجْعَلْهُ مَكَانًا لِلْخَيْرِ وَالسَّكِينَةِ.\n\nاللَّهُمَّ اجْعَلْ بَيْتَنَا بَيْتَ طَاعَةٍ وَعِبَادَةٍ، وَبَيْتَ مَوَدَّةٍ وَرَحْمَةٍ.\n\nاللَّهُمَّ احْفَظْ بَيْتَنَا مِنْ كُلِّ سُوءٍ، وَمِنْ كُلِّ شَرٍّ، وَمِنْ كُلِّ حَسَدٍ وَحَاسِدٍ.\n\nاللَّهُمَّ اجْعَلْ بَيْتَنَا بَيْتَ أَمْنٍ وَسَلَامٍ، وَبَيْتَ رِزْقٍ حَلَالٍ.\n\nاللَّهُمَّ اجْعَلْ بَيْتَنَا بَيْتَ ذِكْرِكَ، وَمَكَانًا لِتِلَاوَةِ كِتَابِكَ، وَمَحَبَّةِ أَهْلِ بَيْتِ نَبِيِّكَ.\n\nرَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا.",
+                source: "Doa Rumah, QS. Al-Furqan: 74"
             },
             {
                 id: 27,
                 title: "Doa Peresmian Bangunan Baru",
                 category: "Bangunan",
-                arabic: "اللَّهُمَّ بَارِكْ فِي هَذَا الْبِنَاءِ، وَاجْعَلْهُ نَافِعًا لِلنَّاسِ",
-                latin: "Allahumma barik fi hadzal bina', waj'alhu nafi'an lin-nas.",
-                arti: "Ya Allah, berkahilah bangunan ini, dan jadikanlah ia bermanfaat bagi manusia.",
-                source: "Doa Bangunan"
+                arabic: "اللَّهُمَّ بَارِكْ فِي هَذَا الْبِنَاءِ، وَاجْعَلْهُ نَافِعًا لِلنَّاسِ.\n\nاللَّهُمَّ اجْعَلْ هَذَا الْبِنَاءَ مَكَانًا لِلْخَيْرِ وَالْبَرَكَةِ، وَمَنْبَرًا لِلْعِلْمِ وَالْهُدَى.\n\nاللَّهُمَّ اجْعَلْهُ مَكَانًا يَذْكُرُونَ فِيهِ اسْمَكَ، وَيُقِيمُونَ فِيهِ شَعَائِرَ دِينِكَ.\n\nاللَّهُمَّ احْفَظْهُ مِنْ كُلِّ سُوءٍ وَآفَةٍ، وَاجْعَلْهُ مَكَانًا آمِنًا.\n\nاللَّهُمَّ بَارِكْ لِكُلِّ مَنْ عَمِلَ فِيهِ، وَاجْعَلْهُ فِي مِيزَانِ حَسَنَاتِهِمْ.\n\nرَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ.",
+                source: "Doa Bangunan, QS. Al-Baqarah: 127"
             },
             {
                 id: 28,
                 title: "Doa Pertemuan Keluarga Besar",
                 category: "Kemasyarakatan",
-                arabic: "اللَّهُمَّ أَلِّفْ بَيْنَ قُلُوبِنَا، وَأَصْلِحْ ذَاتَ بَيْنِنَا، وَاهْدِنَا سُبُلَ السَّلَامِ",
-                latin: "Allahumma allif baina qulubina, wa ashlih dzata bainina, wahdina subulas-salam.",
-                arti: "Ya Allah, satukanlah hati kami, perbaikilah hubungan di antara kami, dan tunjukilah kami jalan-jalan keselamatan.",
-                source: "HR. Abu Dawud"
+                arabic: "اللَّهُمَّ أَلِّفْ بَيْنَ قُلُوبِنَا، وَأَصْلِحْ ذَاتَ بَيْنِنَا، وَاهْدِنَا سُبُلَ السَّلَامِ.\n\nاللَّهُمَّ اجْعَلْ هَذَا الْجَمْعَ جَمْعًا مَرْحُومًا، وَتَفَرُّقَنَا مِنْ بَعْدِهِ تَفَرُّقًا مَعْصُومًا.\n\nاللَّهُمَّ بَارِكْ لَنَا فِي أَهْلِينَا وَأَوْلَادِنَا، وَأَصْلِحْ أَحْوَالَنَا، وَأَدِمْ عَلَيْنَا نِعْمَتَكَ.\n\nاللَّهُمَّ ارْزُقْنَا مَحَبَّتَكَ، وَمَحَبَّةَ مَنْ يُحِبُّكَ، وَمَحَبَّةَ عَمَلٍ يُقَرِّبُنَا إِلَى مَحَبَّتِكَ.\n\nاللَّهُمَّ اجْعَلْ بَيْنَنَا مَوَدَّةً وَرَحْمَةً، وَاجْعَلْنَا مِنَ الْمُتَحَابِّينَ فِيكَ.\n\nرَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ.",
+                source: "HR. Abu Dawud, QS. Al-Hasyr: 10"
             },
             {
                 id: 29,
                 title: "Doa Acara Perkumpulan Umum",
                 category: "Kemasyarakatan",
-                arabic: "اللَّهُمَّ بَارِكْ لَنَا فِي جَمْعِنَا هَذَا، وَاجْعَلْهُ جَمْعًا مَرْحُومًا",
-                latin: "Allahumma barik lana fi jam'ina hadza, waj'alhu jam'an marhuman.",
-                arti: "Ya Allah, berkahilah kami dalam perkumpulan kami ini, dan jadikanlah ia perkumpulan yang penuh rahmat.",
-                source: "Doa Perkumpulan"
+                arabic: "اللَّهُمَّ بَارِكْ لَنَا فِي جَمْعِنَا هَذَا، وَاجْعَلْهُ جَمْعًا مَرْحُومًا.\n\nاللَّهُمَّ اجْعَلْ فِيهِ مِنَ الْخَيْرِ وَالْبَرَكَةِ، وَاصْرِفْ عَنَّا فِيهِ كُلَّ سُوءٍ وَمَكْرُوهٍ.\n\nاللَّهُمَّ أَلِّفْ بَيْنَ قُلُوبِنَا، وَأَصْلِحْ ذَاتَ بَيْنِنَا، وَاجْعَلْنَا إِخْوَانًا مُتَحَابِّينَ فِيكَ.\n\nاللَّهُمَّ بَارِكْ فِي أَعْمَالِنَا، وَتَقَبَّلْ مِنَّا صَالِحَ أَعْمَالِنَا.\n\nاللَّهُمَّ اجْعَلْ آخِرَ دَعْوَانَا أَنِ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ.\n\nسُبْحَانَ رَبِّكَ رَبِّ الْعِزَّةِ عَمَّا يَصِفُونَ، وَسَلَامٌ عَلَى الْمُرْسَلِينَ.",
+                source: "HR. Abu Dawud, QS. Ash-Shaffat: 180-181"
             },
             {
                 id: 30,
                 title: "Doa Keselamatan Negeri",
                 category: "Kemasyarakatan",
-                arabic: "اللَّهُمَّ احْفَظْ بِلَادَنَا وَبِلَادَ الْمُسْلِمِينَ، وَأَصْلِحْ أَئِمَّتَنَا وَوُلَاةَ أُمُورِنَا",
-                latin: "Allahumma ihfazh biladana wa biladal muslimin, wa ashlih a'immatana wa wulata umurina.",
-                arti: "Ya Allah, lindungilah negeri kami dan negeri-negeri kaum muslimin, perbaikilah para pemimpin kami dan penguasa urusan kami.",
-                source: "Doa Keselamatan"
+                arabic: "اللَّهُمَّ احْفَظْ بِلَادَنَا وَبِلَادَ الْمُسْلِمِينَ، وَأَصْلِحْ أَئِمَّتَنَا وَوُلَاةَ أُمُورِنَا.\n\nاللَّهُمَّ اجْعَلْ بِلَادَنَا بِلَادَ أَمْنٍ وَسَلَامٍ، وَرَخَاءٍ وَاطْمِئْنَانٍ.\n\nاللَّهُمَّ اصْرِفْ عَنَّا كُلَّ سُوءٍ، وَكُلَّ بَلَاءٍ، وَكُلَّ فِتْنَةٍ، وَكُلَّ مِحْنَةٍ.\n\nاللَّهُمَّ وَفِّقْ وُلَاةَ أُمُورِنَا لِمَا تُحِبُّ وَتَرْضَى، وَاجْعَلْهُمْ عَادِلِينَ رَاحِمِينَ بِعِبَادِكَ.\n\nاللَّهُمَّ اجْعَلْ بِلَادَنَا عَزِيزَةً بِالْإِسْلَامِ، مَنْصُورَةً بِالْحَقِّ، مَحْفُوظَةً بِأَمَانِكَ.\n\nرَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ.",
+                source: "QS. Al-Baqarah: 201, HR. Bukhari"
             },
             {
                 id: 31,
                 title: "Doa Keselamatan untuk Daerah Terkena Musibah",
                 category: "Kemasyarakatan",
-                arabic: "اللَّهُمَّ ارْحَمْ أَهْلَ الْمُصِيبَةِ، وَاجْبُرْ كَسْرَهُمْ، وَاشْفِ مَرْضَاهُمْ",
-                latin: "Allahummarham ahlal mushibah, wajbur kasrahum, wasyfi mardhahum.",
-                arti: "Ya Allah, rahmatilah penduduk yang tertimpa musibah, perbaikilah keadaan mereka, dan sembuhkanlah orang-orang sakit di antara mereka.",
-                source: "Doa Musibah"
+                arabic: "اللَّهُمَّ ارْحَمْ أَهْلَ الْمُصِيبَةِ، وَاجْبُرْ كَسْرَهُمْ، وَاشْفِ مَرْضَاهُمْ.\n\nاللَّهُمَّ ارْحَمْ مَوْتَاهُمْ، وَتَقَبَّلْ شُهَدَاءَهُمْ، وَاشْفِ جَرْحَاهُمْ.\n\nاللَّهُمَّ اجْبُرْ مُصِيبَتَهُمْ، وَأَحْسِنْ عَزَاءَهُمْ، وَارْزُقْهُمُ الصَّبْرَ وَالسَّلَامَةَ.\n\nاللَّهُمَّ أَعِدْ عَلَيْهِمْ أَمْنَهُمْ وَسَلَامَهُمْ، وَاجْعَلْ مَا أَصَابَهُمْ كَفَّارَةً لِذُنُوبِهِمْ.\n\nاللَّهُمَّ لَا تُؤَاخِذْنَا بِمَا فَعَلَ السُّفَهَاءُ مِنَّا، وَاجْعَلْ هَذِهِ الْمُصِيبَةَ رَحْمَةً لَا نِقْمَةً.\n\nإِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ، اللَّهُمَّ أْجُرْنِي فِي مُصِيبَتِي وَأَخْلِفْ لِي خَيْرًا مِنْهَا.",
+                source: "QS. Al-Baqarah: 156, HR. Muslim"
             },
             {
                 id: 32,
                 title: "Doa Menjenguk Orang Sakit",
                 category: "Kesehatan",
-                arabic: "اللَّهُمَّ رَبَّ النَّاسِ، أَذْهِبِ الْبَأْسَ، اشْفِ أَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا",
-                latin: "Allahumma rabban-nas, adzhibil ba'sa, isyfi antasy-syafi, la syifa'a illa syifa'uka, syifa'an la yughadiru saqaman.",
-                arti: "Ya Allah, Tuhan manusia, hilangkanlah penyakit ini. Sembuhkanlah, Engkaulah Yang Maha Penyembuh. Tidak ada kesembuhan kecuali kesembuhan dari-Mu, kesembuhan yang tidak meninggalkan penyakit.",
-                source: "HR. Bukhari & Muslim"
+                arabic: "اللَّهُمَّ رَبَّ النَّاسِ، أَذْهِبِ الْبَأْسَ، اشْفِ أَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا.\n\nأَسْأَلُ اللَّهَ الْعَظِيمَ رَبَّ الْعَرْشِ الْعَظِيمِ أَنْ يَشْفِيَكَ.\n\nاللَّهُمَّ عَافِهِ فِي بَدَنِهِ، وَعَافِهِ فِي سَمْعِهِ، وَعَافِهِ فِي بَصَرِهِ، لَا إِلَٰهَ إِلَّا أَنْتَ.\n\nاللَّهُمَّ اشْفِهِ شِفَاءً عَاجِلًا، وَاجْعَلْ مَا أَصَابَهُ كَفَّارَةً لِذُنُوبِهِ، وَرِفْعَةً لِدَرَجَاتِهِ.\n\nاللَّهُمَّ اجْعَلْ مَرَضَهُ رَحْمَةً، وَصَبْرَهُ أَجْرًا، وَشِفَاءَهُ عَافِيَةً.\n\nبِسْمِ اللَّهِ أَرْقِيكَ، مِنْ كُلِّ شَيْءٍ يُؤْذِيكَ، مِنْ شَرِّ كُلِّ نَفْسٍ أَوْ عَيْنٍ حَاسِدٍ، اللَّهُ يَشْفِيكَ، بِسْمِ اللَّهِ أَرْقِيكَ.",
+                source: "HR. Bukhari & Muslim, HR. Abu Dawud"
             },
             {
                 id: 33,
                 title: "Doa Peresmian Perusahaan Baru",
                 category: "Perusahaan",
-                arabic: "اللَّهُمَّ بَارِكْ لَنَا فِي هَذِهِ الشَّرِكَةِ، وَاجْعَلْهَا مَصْدَرَ خَيْرٍ وَرِزْقٍ حَلَالٍ",
-                latin: "Allahumma barik lana fi hadzihisy-syarikah, waj'alha mashdara khairin wa rizqin halal.",
-                arti: "Ya Allah, berkahilah kami dalam perusahaan ini, dan jadikanlah ia sumber kebaikan dan rezeki yang halal.",
-                source: "Doa Perusahaan"
+                arabic: "اللَّهُمَّ بَارِكْ لَنَا فِي هَذِهِ الشَّرِكَةِ، وَاجْعَلْهَا مَصْدَرَ خَيْرٍ وَرِزْقٍ حَلَالٍ.\n\nاللَّهُمَّ اجْعَلْهَا مَكَانًا لِلْعَمَلِ الصَّالِحِ، وَنَشْرِ الْخَيْرِ، وَخِدْمَةِ النَّاسِ.\n\nاللَّهُمَّ بَارِكْ لَنَا فِي أَمْوَالِنَا، وَاجْعَلْهَا بَرَكَةً لَا نِقْمَةً، وَحَلَالًا لَا حَرَامًا.\n\nاللَّهُمَّ اجْعَلْ هَذِهِ الشَّرِكَةَ سَبَبًا لِرِزْقٍ وَاسِعٍ، وَخَيْرٍ عَمِيمٍ، وَبَرَكَةٍ شَامِلَةٍ.\n\nاللَّهُمَّ احْفَظْهَا مِنْ كُلِّ سُوءٍ، وَاجْعَلْهَا فِي حِفْظِكَ وَأَمَانِكَ.\n\nاللَّهُمَّ ارْزُقْنَا رِزْقًا حَلَالًا طَيِّبًا مُبَارَكًا فِيهِ، وَاجْعَلْنَا مِنَ الشَّاكِرِينَ.",
+                source: "Doa Perusahaan, HR. Tirmidzi"
             },
             {
                 id: 34,
                 title: "Doa Rapat Kerja Tahunan Perusahaan",
                 category: "Perusahaan",
-                arabic: "اللَّهُمَّ وَفِّقْنَا فِي أَعْمَالِنَا، وَبَارِكْ لَنَا فِي اجْتِمَاعِنَا، وَاهْدِنَا إِلَى الصَّوَابِ",
-                latin: "Allahumma waffiqna fi a'malina, wa barik lana fi ijtima'ina, wahdina ilash-shawab.",
-                arti: "Ya Allah, berilah kami taufik dalam pekerjaan kami, berkahilah kami dalam rapat kami, dan tunjukilah kami ke jalan yang benar.",
-                source: "Doa Rapat"
+                arabic: "اللَّهُمَّ وَفِّقْنَا فِي أَعْمَالِنَا، وَبَارِكْ لَنَا فِي اجْتِمَاعِنَا، وَاهْدِنَا إِلَى الصَّوَابِ.\n\nاللَّهُمَّ اجْعَلْ هَذَا الرَّبْطَ رَبْطَ خَيْرٍ وَبَرَكَةٍ، وَسَبَبًا لِنَجَاحِ أَعْمَالِنَا.\n\nاللَّهُمَّ اجْعَلْ أَقْوَالَنَا صَوَابًا، وَأَعْمَالَنَا خَالِصَةً، وَقُلُوبَنَا مُتَّحِدَةً.\n\nاللَّهُمَّ بَارِكْ فِي قَرَارَاتِنَا، وَاجْعَلْهَا سَدِيدَةً نَافِعَةً.\n\nاللَّهُمَّ ارْزُقْنَا التَّوْفِيقَ وَالسَّدَادَ، وَاجْعَلْ عَمَلَنَا خَالِصًا لِوَجْهِكَ الْكَرِيمِ.\n\nاللَّهُمَّ اجْعَلْ آخِرَ دَعْوَانَا أَنِ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ.",
+                source: "Doa Rapat, HR. Tirmidzi"
             },
             {
                 id: 35,
                 title: "Doa Gathering Acara Perusahaan",
                 category: "Perusahaan",
-                arabic: "اللَّهُمَّ اجْعَلْ جَمْعَنَا هَذَا جَمْعًا مَرْحُومًا، وَتَفَرُّقَنَا مِنْ بَعْدِهِ تَفَرُّقًا مَعْصُومًا",
-                latin: "Allahummaj'al jam'ana hadza jam'an marhuman, wa tafarruqana min ba'dihi tafarruqan ma'shuman.",
-                arti: "Ya Allah, jadikanlah pertemuan kami ini pertemuan yang penuh rahmat, dan perpisahan kami setelahnya perpisahan yang terjaga.",
-                source: "HR. Abu Dawud"
+                arabic: "اللَّهُمَّ اجْعَلْ جَمْعَنَا هَذَا جَمْعًا مَرْحُومًا، وَتَفَرُّقَنَا مِنْ بَعْدِهِ تَفَرُّقًا مَعْصُومًا.\n\nاللَّهُمَّ بَارِكْ لَنَا فِي جَمْعِنَا هَذَا، وَاجْعَلْهُ سَبَبًا لِلتَّقَارُبِ وَالتَّعَاوُنِ فِي الْخَيْرِ.\n\nاللَّهُمَّ أَلِّفْ بَيْنَ قُلُوبِنَا، وَأَصْلِحْ ذَاتَ بَيْنِنَا، وَاهْدِنَا سُبُلَ السَّلَامِ.\n\nاللَّهُمَّ اجْعَلْنَا إِخْوَانًا مُتَحَابِّينَ فِيكَ، مُتَعَاوِنِينَ عَلَى الْبِرِّ وَالتَّقْوَى.\n\nاللَّهُمَّ اجْعَلْ هَذَا الْجَمْعَ سَبَبًا لِنَجَاحِ أَعْمَالِنَا، وَتَحْقِيقِ أَهْدَافِنَا.\n\nرَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ.",
+                source: "HR. Abu Dawud, QS. Al-Baqarah: 201"
             },
             {
                 id: 36,
                 title: "Doa Acara Pelantikan Jabatan",
                 category: "Perusahaan",
-                arabic: "اللَّهُمَّ أَعِنْهُ عَلَى مَا وَلَّيْتَهُ، وَوَفِّقْهُ لِخِدْمَةِ النَّاسِ، وَاجْعَلْهُ عَدْلًا فِي حُكْمِهِ",
-                latin: "Allahumma a'inhu 'ala ma wallaitahu, wa waffiqhu likhidmatin-nas, waj'alhu 'adlan fi hukmihi.",
-                arti: "Ya Allah, bantulah dia dalam tugas yang Engkau berikan, berilah taufik untuk melayani manusia, dan jadikanlah dia adil dalam keputusannya.",
-                source: "Doa Jabatan"
+                arabic: "اللَّهُمَّ أَعِنْهُ عَلَى مَا وَلَّيْتَهُ، وَوَفِّقْهُ لِخِدْمَةِ النَّاسِ، وَاجْعَلْهُ عَدْلًا فِي حُكْمِهِ.\n\nاللَّهُمَّ اجْعَلْهُ مِنَ الْعَادِلِينَ الرَّاحِمِينَ، وَبَارِكْ لَهُ فِي وِلَايَتِهِ.\n\nاللَّهُمَّ أَعِنْهُ عَلَى أَدَاءِ الْأَمَانَةِ، وَاجْعَلْهُ مِنْ أَهْلِ الْعِلْمِ وَالْعَدْلِ.\n\nاللَّهُمَّ ارْزُقْهُ الْحِكْمَةَ وَالْبَصِيرَةَ، وَاجْعَلْ قَرَارَاتِهِ سَدِيدَةً نَافِعَةً.\n\nاللَّهُمَّ اجْعَلْهُ مِمَّنْ يَخَافُكَ فِي السِّرِّ وَالْعَلَانِيَةِ، وَيُقِيمُ الْعَدْلَ بَيْنَ النَّاسِ.\n\nاللَّهُمَّ بَارِكْ لِهَذَا الْبَلَدِ وَأَهْلِهِ، وَاجْعَلْ وِلَايَتَهُ سَبَبًا لِلْخَيْرِ وَالْبَرَكَةِ.",
+                source: "Doa Jabatan, HR. Muslim"
             },
             {
                 id: 37,
                 title: "Doa Acara Purna Tugas",
                 category: "Perusahaan",
-                arabic: "اللَّهُمَّ اشْكُرْ لَهُ مَا قَدَّمَ، وَاجْزِهِ خَيْرَ الْجَزَاءِ، وَبَارِكْ لَهُ فِي حَيَاتِهِ",
-                latin: "Allahummasykur lahu ma qaddama, wajzihi khairal jaza', wa barik lahu fi hayatihi.",
-                arti: "Ya Allah, terimalah apa yang telah ia lakukan, berilah balasan terbaik, dan berkahilah kehidupannya.",
-                source: "Doa Purna Tugas"
+                arabic: "اللَّهُمَّ اشْكُرْ لَهُ مَا قَدَّمَ، وَاجْزِهِ خَيْرَ الْجَزَاءِ، وَبَارِكْ لَهُ فِي حَيَاتِهِ.\n\nاللَّهُمَّ اجْزِهِ عَنِ الْخَيْرِ خَيْرًا، وَعَنِ الصَّالِحَاتِ جَزَاءً حَسَنًا.\n\nاللَّهُمَّ بَارِكْ لَهُ فِيمَا بَقِيَ مِنْ عُمْرِهِ، وَاجْعَلْهَا حَيَاةً طَيِّبَةً مَلِيئَةً بِالطَّاعَةِ وَالْعَمَلِ الصَّالِحِ.\n\nاللَّهُمَّ اجْعَلْ عَمَلَهُ الْمَاضِي شَاهِدًا لَهُ يَوْمَ الْقِيَامَةِ، لَا شَاهِدًا عَلَيْهِ.\n\nاللَّهُمَّ ارْزُقْهُ صِحَّةً وَعَافِيَةً، وَاجْعَلْ أَيَّامَهُ الْقَادِمَةَ أَيَّامَ سَكِينَةٍ وَعِبَادَةٍ.\n\nاللَّهُمَّ احْفَظْ لَهُ أَهْلَهُ وَوَلَدَهُ، وَأَدِمْ عَلَيْهِ نِعْمَتَكَ.",
+                source: "Doa Purna Tugas, HR. Tirmidzi"
             },
             {
                 id: 38,
                 title: "Doa Memulai Pelajaran",
                 category: "Sekolah",
-                arabic: "اللَّهُمَّ افْتَحْ عَلَيْنَا حِكْمَتَكَ، وَانْشُرْ عَلَيْنَا مِنْ خَزَائِنِ رَحْمَتِكَ، يَا أَرْحَمَ الرَّاحِمِينَ",
-                latin: "Allahummaftah 'alaina hikmataka, wansyur 'alaina min khaza'ini rahmatika, ya arhamar-rahimin.",
-                arti: "Ya Allah, bukakanlah hikmah-Mu kepada kami, dan limpahkanlah kepada kami dari perbendaharaan rahmat-Mu, wahai Yang Maha Penyayang.",
-                source: "Doa Belajar"
+                arabic: "اللَّهُمَّ افْتَحْ عَلَيْنَا حِكْمَتَكَ، وَانْشُرْ عَلَيْنَا مِنْ خَزَائِنِ رَحْمَتِكَ، يَا أَرْحَمَ الرَّاحِمِينَ.\n\nرَبِّ زِدْنِي عِلْمًا، وَارْزُقْنِي فَهْمًا، وَاجْعَلْنِي مِنَ الصَّالِحِينَ.\n\nاللَّهُمَّ يَسِّرْ لَنَا الْعِلْمَ النَّافِعَ، وَاجْعَلْنَا مِنْ أَهْلِ الْعِلْمِ وَالْعَمَلِ.\n\nاللَّهُمَّ اجْعَلِ الْقُرْآنَ رَبِيعَ قُلُوبِنَا، وَنُورَ صُدُورِنَا، وَجَلَاءَ أَحْزَانِنَا.\n\nاللَّهُمَّ عَلِّمْنَا مَا يَنْفَعُنَا، وَانْفَعْنَا بِمَا عَلَّمْتَنَا، وَزِدْنَا عِلْمًا وَعَمَلًا.\n\nرَبَّنَا آتِنَا مِنْ لَدُنْكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا.",
+                source: "Doa Belajar, HR. Ibnu Majah, QS. Al-Kahfi: 10"
             },
             {
                 id: 39,
                 title: "Doa Acara Awal Tahun Ajaran Baru",
                 category: "Sekolah",
-                arabic: "اللَّهُمَّ اجْعَلْ هَذَا الْعَامَ عَامَ خَيْرٍ وَبَرَكَةٍ، وَوَفِّقْنَا فِيهِ لِلْعِلْمِ النَّافِعِ",
-                latin: "Allahummaj'al hadzal 'ama 'ama khairin wa barakah, wa waffiqna fihi lil 'ilmin-nafi'.",
-                arti: "Ya Allah, jadikanlah tahun ini tahun kebaikan dan keberkahan, dan berilah kami taufik untuk menuntut ilmu yang bermanfaat.",
-                source: "Doa Tahun Baru"
+                arabic: "اللَّهُمَّ اجْعَلْ هَذَا الْعَامَ عَامَ خَيْرٍ وَبَرَكَةٍ، وَوَفِّقْنَا فِيهِ لِلْعِلْمِ النَّافِعِ.\n\nاللَّهُمَّ بَارِكْ لِطُلَّابِنَا فِي عِلْمِهِمْ، وَاجْعَلْهُمْ مِنَ النَّافِعِينَ الْمُخْلِصِينَ.\n\nاللَّهُمَّ اجْعَلْ هَذَا الْعَامَ عَامَ نَجَاحٍ وَتَفَوُّقٍ، وَبَارِكْ فِي أَعْمَالِنَا وَأَقْوَالِنَا.\n\nاللَّهُمَّ عَلِّمْنَا مَا يَنْفَعُنَا، وَانْفَعْنَا بِمَا عَلَّمْتَنَا، وَاجْعَلْنَا مِنَ الْعَامِلِينَ بِعِلْمِهِمْ.\n\nاللَّهُمَّ اجْعَلْنَا مِنْ حَمَلَةِ الْقُرْآنِ، وَمِنَ الْعَامِلِينَ بِهِ، وَمِنَ الْمُتَدَبِّرِينَ لِآيَاتِهِ.\n\nرَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا.",
+                source: "Doa Tahun Baru, QS. Al-Furqan: 74"
             },
             {
                 id: 40,
                 title: "Doa Acara Kelulusan/Akhirussanah",
                 category: "Sekolah",
-                arabic: "اللَّهُمَّ بَارِكْ لِطُلَّابِنَا فِي عِلْمِهِمْ، وَاجْعَلْهُمْ مِنَ النَّافِعِينَ الْمُخْلِصِينَ",
-                latin: "Allahumma barik li thullabina fi 'ilmihim, waj'alhum minan-nafi'in al-mukhlisin.",
-                arti: "Ya Allah, berkahilah para siswa kami dalam ilmu mereka, dan jadikanlah mereka termasuk orang-orang yang bermanfaat dan ikhlas.",
-                source: "Doa Kelulusan"
+                arabic: "اللَّهُمَّ بَارِكْ لِطُلَّابِنَا فِي عِلْمِهِمْ، وَاجْعَلْهُمْ مِنَ النَّافِعِينَ الْمُخْلِصِينَ.\n\nاللَّهُمَّ اجْعَلْ مَا تَعَلَّمُوهُ نَافِعًا لَهُمْ وَلِأُمَّتِهِمْ، وَاجْعَلْهُمْ مِنَ الْعَامِلِينَ بِعِلْمِهِمْ.\n\nاللَّهُمَّ وَفِّقْهُمْ لِمَا تُحِبُّ وَتَرْضَى، وَاجْعَلْهُمْ مِنَ الصَّالِحِينَ الْمُصْلِحِينَ.\n\nاللَّهُمَّ ارْزُقْهُمْ عِلْمًا نَافِعًا، وَعَمَلًا صَالِحًا، وَرِزْقًا طَيِّبًا.\n\nاللَّهُمَّ اجْعَلْهُمْ قَادَةً لِلْخَيْرِ، وَدُعَاةً لِلْحَقِّ، وَحَمَلَةً لِرِسَالَةِ الْإِسْلَامِ.\n\nرَبَّنَا آتِنَا مِنْ لَدُنْكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا.",
+                source: "Doa Kelulusan, QS. Al-Kahfi: 10"
             },
             {
                 id: 41,
                 title: "Doa Apel atau Upacara",
                 category: "Sekolah",
-                arabic: "اللَّهُمَّ اجْعَلْنَا مِنَ الْمُؤْمِنِينَ الصَّادِقِينَ، وَاجْعَلْ أَعْمَالَنَا خَالِصَةً لِوَجْهِكَ الْكَرِيمِ",
-                latin: "Allahummaj'alna minal mu'mininash-shadiqin, waj'al a'malana khalishatan liwajhika al-karim.",
-                arti: "Ya Allah, jadikanlah kami termasuk orang-orang mukmin yang jujur, dan jadikanlah amal perbuatan kami ikhlas untuk wajah-Mu yang mulia.",
-                source: "Doa Upacara"
+                arabic: "اللَّهُمَّ اجْعَلْنَا مِنَ الْمُؤْمِنِينَ الصَّادِقِينَ، وَاجْعَلْ أَعْمَالَنَا خَالِصَةً لِوَجْهِكَ الْكَرِيمِ.\n\nاللَّهُمَّ اجْعَلْنَا مِنَ الْمُتَّقِينَ، وَاجْعَلْ أَقْوَالَنَا صَوَابًا، وَأَعْمَالَنَا صَالِحَةً.\n\nاللَّهُمَّ وَفِّقْنَا لِطَاعَتِكَ، وَاجْعَلْنَا مِنْ عِبَادِكَ الصَّالِحِينَ الْبَارِّينَ.\n\nاللَّهُمَّ اجْعَلْنَا مِنَ الَّذِينَ يَسْتَمِعُونَ الْقَوْلَ فَيَتَّبِعُونَ أَحْسَنَهُ.\n\nاللَّهُمَّ احْفَظْ بِلَادَنَا وَبِلَادَ الْمُسْلِمِينَ، وَاجْعَلْهَا آمِنَةً مُطْمَئِنَّةً.\n\nرَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ.",
+                source: "Doa Upacara, QS. Al-Baqarah: 201"
             }
         ];
 
         // ============================================================
-        // STATE & STORAGE
+        // STATE
         // ============================================================
         let prayersData = [];
         let currentCategory = 'Semua';
         let searchQuery = '';
         let isAdmin = false;
         let editingId = null;
+        let currentDetailId = null;
 
-        // Load data dari localStorage atau default
+        // ============================================================
+        // STORAGE
+        // ============================================================
         function loadData() {
             try {
                 const stored = localStorage.getItem(STORAGE_KEY);
                 if (stored) {
-                    prayersData = JSON.parse(stored);
-                } else {
-                    prayersData = [...defaultPrayers];
-                    saveData();
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        prayersData = parsed;
+                        return;
+                    }
                 }
+                prayersData = [...defaultPrayers];
+                saveData();
             } catch (e) {
                 prayersData = [...defaultPrayers];
             }
@@ -1155,7 +1036,6 @@
         const prayerList = document.getElementById('prayerList');
         const searchInput = document.getElementById('searchInput');
         const modalOverlay = document.getElementById('modalOverlay');
-        const closeModal = document.getElementById('closeModal');
         const formOverlay = document.getElementById('formOverlay');
         const pinOverlay = document.getElementById('pinOverlay');
         const adminBadge = document.getElementById('adminBadge');
@@ -1202,15 +1082,11 @@
                 addBtn.style.display = 'flex';
                 logoutBtn.style.display = 'flex';
                 adminBadge.textContent = 'Admin';
-                adminBadge.style.color = '#ffd966';
-                adminBadge.style.background = 'rgba(255, 215, 120, 0.2)';
             } else {
                 loginBtn.style.display = 'flex';
                 addBtn.style.display = 'none';
                 logoutBtn.style.display = 'none';
                 adminBadge.textContent = 'Publik';
-                adminBadge.style.color = '#ffd966';
-                adminBadge.style.background = 'rgba(255, 215, 120, 0.15)';
             }
         }
 
@@ -1237,7 +1113,6 @@
                 });
             });
 
-            // Update datalist
             const datalist = document.getElementById('categoryList');
             datalist.innerHTML = categories.filter(c => c !== 'Semua').map(c => `<option value="${c}">`).join('');
         }
@@ -1248,10 +1123,15 @@
                 const q = searchQuery.toLowerCase();
                 const matchSearch = searchQuery === '' ||
                     prayer.title.toLowerCase().includes(q) ||
-                    prayer.category.toLowerCase().includes(q) ||
-                    prayer.arti.toLowerCase().includes(q);
+                    prayer.category.toLowerCase().includes(q);
                 return matchCategory && matchSearch;
             });
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str || '';
+            return div.innerHTML;
         }
 
         function renderPrayers() {
@@ -1267,15 +1147,19 @@
                 return;
             }
 
-            prayerList.innerHTML = filtered.map(prayer => `
+            prayerList.innerHTML = filtered.map(prayer => {
+                // Preview arab (hapus newline, ambil 60 karakter pertama)
+                const arabicPreview = (prayer.arabic || '').replace(/\n/g, ' ').substring(0, 80);
+                return `
                 <div class="prayer-card" data-id="${prayer.id}">
                     <div class="card-header">
                         <span class="card-title">${escapeHtml(prayer.title)}</span>
                         <span class="card-category">${escapeHtml(prayer.category)}</span>
                     </div>
-                    <div class="card-preview">${escapeHtml(prayer.arti)}</div>
+                    <div class="card-preview">${escapeHtml(arabicPreview)}${(prayer.arabic || '').length > 80 ? '...' : ''}</div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
 
             document.querySelectorAll('.prayer-card').forEach(card => {
                 card.addEventListener('click', () => {
@@ -1284,17 +1168,9 @@
             });
         }
 
-        function escapeHtml(str) {
-            const div = document.createElement('div');
-            div.textContent = str || '';
-            return div.innerHTML;
-        }
-
         // ============================================================
         // DETAIL MODAL
         // ============================================================
-        let currentDetailId = null;
-
         function showPrayerDetail(id) {
             const prayer = prayersData.find(p => p.id === id);
             if (!prayer) return;
@@ -1303,11 +1179,9 @@
             document.getElementById('modalTitle').textContent = prayer.title;
             document.getElementById('modalCategory').textContent = prayer.category;
             document.getElementById('modalArabic').textContent = prayer.arabic;
-            document.getElementById('modalLatin').textContent = prayer.latin;
-            document.getElementById('modalArti').innerHTML = `<strong>Artinya:</strong> ${escapeHtml(prayer.arti)}`;
-            document.getElementById('modalSource').textContent = `Sumber: ${prayer.source}`;
+            document.getElementById('modalSource').textContent = prayer.source ? `Sumber: ${prayer.source}` : '';
+            document.getElementById('modalSource').style.display = prayer.source ? 'block' : 'none';
 
-            // Tampilkan tombol edit/hapus jika admin
             document.getElementById('modalActions').style.display = isAdmin ? 'flex' : 'none';
 
             modalOverlay.classList.add('active');
@@ -1320,7 +1194,7 @@
         }
 
         // ============================================================
-        // FORM MODAL (Tambah/Edit)
+        // FORM MODAL
         // ============================================================
         function openForm(prayer = null) {
             editingId = prayer ? prayer.id : null;
@@ -1328,9 +1202,7 @@
             document.getElementById('fTitle').value = prayer ? prayer.title : '';
             document.getElementById('fCategory').value = prayer ? prayer.category : '';
             document.getElementById('fArabic').value = prayer ? prayer.arabic : '';
-            document.getElementById('fLatin').value = prayer ? prayer.latin : '';
-            document.getElementById('fArti').value = prayer ? prayer.arti : '';
-            document.getElementById('fSource').value = prayer ? prayer.source : '';
+            document.getElementById('fSource').value = prayer ? (prayer.source || '') : '';
 
             formOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -1346,25 +1218,23 @@
             const title = document.getElementById('fTitle').value.trim();
             const category = document.getElementById('fCategory').value.trim();
             const arabic = document.getElementById('fArabic').value.trim();
-            const latin = document.getElementById('fLatin').value.trim();
-            const arti = document.getElementById('fArti').value.trim();
             const source = document.getElementById('fSource').value.trim();
 
-            if (!title || !category || !arabic || !arti) {
-                showToast('Judul, kategori, arab, dan arti wajib diisi', true);
+            if (!title || !category || !arabic) {
+                showToast('Judul, kategori, dan teks arab wajib diisi', true);
                 return;
             }
 
             if (editingId) {
                 const idx = prayersData.findIndex(p => p.id === editingId);
                 if (idx !== -1) {
-                    prayersData[idx] = { id: editingId, title, category, arabic, latin, arti, source };
+                    prayersData[idx] = { id: editingId, title, category, arabic, source };
                 }
                 showToast('Do\'a berhasil diperbarui ✓');
             } else {
                 prayersData.push({
                     id: getNextId(),
-                    title, category, arabic, latin, arti, source
+                    title, category, arabic, source
                 });
                 showToast('Do\'a berhasil ditambahkan ✓');
             }
@@ -1374,7 +1244,6 @@
             renderCategories();
             renderPrayers();
 
-            // Refresh detail modal jika terbuka
             if (modalOverlay.classList.contains('active') && editingId) {
                 showPrayerDetail(editingId);
             }
@@ -1413,13 +1282,11 @@
         // EVENT LISTENERS
         // ============================================================
         function bindEvents() {
-            // Detail modal
-            closeModal.addEventListener('click', closeModalFunc);
+            document.getElementById('closeModal').addEventListener('click', closeModalFunc);
             modalOverlay.addEventListener('click', (e) => {
                 if (e.target === modalOverlay) closeModalFunc();
             });
 
-            // Edit / delete dari detail modal
             document.getElementById('editPrayerBtn').addEventListener('click', () => {
                 const prayer = prayersData.find(p => p.id === currentDetailId);
                 if (prayer) {
@@ -1440,7 +1307,6 @@
                 }
             });
 
-            // Form modal
             document.getElementById('closeForm').addEventListener('click', closeForm);
             document.getElementById('cancelForm').addEventListener('click', closeForm);
             document.getElementById('saveForm').addEventListener('click', saveForm);
@@ -1448,7 +1314,6 @@
                 if (e.target === formOverlay) closeForm();
             });
 
-            // Pin modal
             document.getElementById('closePin').addEventListener('click', closePin);
             document.getElementById('submitPin').addEventListener('click', submitPin);
             document.getElementById('pinInput').addEventListener('keydown', (e) => {
@@ -1458,7 +1323,6 @@
                 if (e.target === pinOverlay) closePin();
             });
 
-            // Admin bar
             document.getElementById('loginBtn').addEventListener('click', openPin);
             document.getElementById('addBtn').addEventListener('click', () => openForm());
             document.getElementById('logoutBtn').addEventListener('click', () => {
@@ -1466,13 +1330,11 @@
                 showToast('Logout berhasil');
             });
 
-            // Search
             searchInput.addEventListener('input', (e) => {
                 searchQuery = e.target.value;
                 renderPrayers();
             });
 
-            // Escape key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     if (modalOverlay.classList.contains('active')) closeModalFunc();
