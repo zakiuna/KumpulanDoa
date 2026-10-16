@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kumpulan Do'a Berbagai Acara</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        /* Font Arab Arabic Typesetting */
+        @font-face {
+            font-family: 'Arabic Typesetting';
+            src: local('Arabic Typesetting'), local('ArabicTypesetting'), local('Traditional Arabic');
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #0b1a2a;
+            color: #eef5ff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 16px 16px 80px;
+            min-height: 100vh;
+            background: rgba(10, 25, 40, 0.55);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Header */
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0 16px;
+            border-bottom: 1px solid rgba(255, 215, 120, 0.3);
+            margin-bottom: 16px;
+        }
+
+        .app-header h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ffd966, #f0b429);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.5px;
+        }
+
+        .app-header .badge {
+            background: rgba(255, 215, 120, 0.15);
+            border: 1px solid rgba(255, 215, 120, 0.4);
+            color: #ffd966;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        /* Admin action buttons */
+        .admin-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .btn-admin {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 215, 120, 0.3);
+            background: rgba(255, 215, 120, 0.08);
+            color: #ffd966;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-admin:active {
+            transform: scale(0.97);
+        }
+
+        .btn-admin.primary {
+            background: linear-gradient(135deg, #ffd966, #f0b429);
+            color: #0b1a2a;
+            border-color: #ffd966;
+        }
+
+        .btn-admin.danger {
+            background: rgba(255, 80, 80, 0.12);
+            border-color: rgba(255, 80, 80, 0.4);
+            color: #ff8080;
+        }
+
+        .btn-admin:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Search Bar */
+        .search-wrapper {
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 12px 16px 12px 42px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 215, 120, 0.3);
+            background: rgba(255, 255, 255, 0.07);
+            color: #eef5ff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .search-wrapper input:focus {
+            border-color: #ffd966;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 20px rgba(255, 215, 120, 0.15);
+        }
+
+        .search-wrapper input::placeholder {
+            color: rgba(238, 245, 255, 0.5);
+        }
+
+        .search-wrapper .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ffd966;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* Category Chips */
+        .category-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 8px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .category-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-chip {
+            flex-shrink: 0;
+            padding: 8px 18px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 215, 120, 0.2);
+            color: rgba(238, 245, 255, 0.8);
+            font-size: 0.78rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            backdrop-filter: blur(4px);
+        }
+
+        .category-chip.active {
+            background: linear-gradient(135deg, #ffd966, #f0b429);
+            color: #0b1a2a;
+            border-color: #ffd966;
+            font-weight: 600;
+            box-shadow: 0 0 20px rgba(255, 215, 120, 0.3);
+        }
+
+        /* Prayer List */
+        .prayer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .prayer-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 120, 0.15);
+            border-radius: 16px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(6px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prayer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, #ffd966, #f0b429);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .prayer-card:active::before {
+            opacity: 1;
+        }
+
+        .prayer-card:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.09);
+        }
+
+        .prayer-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .prayer-card .card-title {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #eef5ff;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .prayer-card .card-category {
+            font-size: 0.65rem;
+            color: #ffd966;
+            background: rgba(255, 215, 120, 0.12);
+            padding: 3px 10px;
+            border-radius: 12px;
+            white-space: nowrap;
+            font-weight: 500;
+            border: 1px solid rgba(255, 215, 120, 0.2);
+        }
+
+        .prayer-card .card-preview {
+            font-size: 0.78rem;
+            color: rgba(238, 245, 255, 0.55);
+            margin-top: 6px;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 12, 20, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: linear-gradient(180deg, #112233, #0b1a2a);
+            border-radius: 24px 24px 0 0;
+            width: 100%;
+            max-width: 480px;
+            max-height: 92vh;
+            overflow-y: auto;
+            padding: 24px 20px 40px;
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+            border-top: 1px solid rgba(255, 215, 120, 0.3);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-content .modal-handle {
+            width: 40px;
+            height: 4px;
+            background: rgba(255, 215, 120, 0.4);
+            border-radius: 2px;
+            margin: 0 auto 18px;
+        }
+
+        .modal-content .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffd966;
+            margin-bottom: 6px;
+            line-height: 1.4;
+            padding-right: 40px;
+        }
+
+        .modal-content .modal-category {
+            font-size: 0.75rem;
+            color: rgba(255, 215, 120, 0.7);
+            margin-bottom: 18px;
+            display: inline-block;
+            background: rgba(255, 215, 120, 0.1);
+            padding: 3px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 215, 120, 0.2);
+        }
+
+        /* FONT ARAB - Arabic Typesetting */
+        .modal-content .modal-arabic {
+            font-family: 'Arabic Typesetting', 'Traditional Arabic', 'Amiri', 'Scheherazade', serif;
+            font-size: 2rem;
+            line-height: 2.4;
+            text-align: right;
+            direction: rtl;
+            color: #eef5ff;
+            margin-bottom: 20px;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border-right: 3px solid #ffd966;
+            word-spacing: 6px;
+        }
+
+        .modal-content .modal-latin {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: rgba(238, 245, 255, 0.85);
+            font-style: italic;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: rgba(255, 215, 120, 0.05);
+            border-radius: 10px;
+            border-left: 3px solid rgba(255, 215, 120, 0.5);
+        }
+
+        .modal-content .modal-arti {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: rgba(238, 245, 255, 0.75);
+            margin-bottom: 16px;
+        }
+
+        .modal-content .modal-arti strong {
+            color: #ffd966;
+            font-weight: 600;
+        }
+
+        .modal-content .modal-source {
+            font-size: 0.75rem;
+            color: rgba(238, 245, 255, 0.5);
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 215, 120, 0.15);
+            text-align: center;
+        }
+
+        .modal-content .close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 215, 120, 0.2);
+            color: #eef5ff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .modal-content .close-btn:active {
+            background: rgba(255, 215, 120, 0.2);
+            transform: scale(0.9);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 215, 120, 0.15);
+        }
+
+        /* Form fields */
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            color: #ffd966;
+            margin-bottom: 6px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 120, 0.25);
+            background: rgba(255, 255, 255, 0.05);
+            color: #eef5ff;
+            font-size: 0.85rem;
+            outline: none;
+            transition: all 0.25s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #ffd966;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 12px rgba(255, 215, 120, 0.15);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 70px;
+            line-height: 1.5;
+        }
+
+        .form-group textarea.arabic-input {
+            font-family: 'Arabic Typesetting', 'Traditional Arabic', serif;
+            font-size: 1.6rem;
+            direction: rtl;
+            text-align: right;
+            line-height: 2;
+            min-height: 100px;
+        }
+
+        /* PIN Modal */
+        .pin-modal .modal-content {
+            max-width: 360px;
+            border-radius: 24px;
+            margin-bottom: 20vh;
+            padding: 28px 24px;
+        }
+
+        .pin-modal {
+            align-items: center;
+        }
+
+        .pin-modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .pin-modal .modal-content {
+            transform: translateY(30px) scale(0.95);
+        }
+
+        .pin-icon {
+            text-align: center;
+            font-size: 2.4rem;
+            margin-bottom: 10px;
+        }
+
+        .pin-title {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffd966;
+            margin-bottom: 6px;
+        }
+
+        .pin-desc {
+            text-align: center;
+            font-size: 0.78rem;
+            color: rgba(238, 245, 255, 0.6);
+            margin-bottom: 20px;
+        }
+
+        .pin-input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 215, 120, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffd966;
+            font-size: 1.6rem;
+            text-align: center;
+            letter-spacing: 10px;
+            outline: none;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .pin-input:focus {
+            border-color: #ffd966;
+            box-shadow: 0 0 20px rgba(255, 215, 120, 0.2);
+        }
+
+        .pin-error {
+            color: #ff8080;
+            font-size: 0.78rem;
+            text-align: center;
+            margin-bottom: 10px;
+            min-height: 18px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(238, 245, 255, 0.4);
+        }
+
+        .empty-state .icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 0.9rem;
+        }
+
+        .app-footer {
+            text-align: center;
+            padding: 20px 0 10px;
+            font-size: 0.7rem;
+            color: rgba(238, 245, 255, 0.3);
+            border-top: 1px solid rgba(255, 215, 120, 0.08);
+            margin-top: 20px;
+        }
+
+        .modal-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 215, 120, 0.3);
+            border-radius: 4px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #ffd966, #f0b429);
+            color: #0b1a2a;
+            padding: 12px 22px;
+            border-radius: 24px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #ff8080, #e05555);
+            color: #fff;
+        }
+
+        @media (max-width: 380px) {
+            .app-header h1 { font-size: 1.1rem; }
+            .modal-content .modal-arabic { font-size: 1.6rem; line-height: 2.2; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="app-container">
+        <header class="app-header">
+            <h1>📖 Kumpulan Do'a</h1>
+            <span class="badge" id="adminBadge">Publik</span>
+        </header>
+
+        <!-- Admin Bar -->
+        <div class="admin-bar" id="adminBar">
+            <button class="btn-admin" id="loginBtn">🔒 Login</button>
+            <button class="btn-admin primary" id="addBtn" style="display:none;">➕ Tambah Do'a</button>
+            <button class="btn-admin danger" id="logoutBtn" style="display:none;">🚪 Logout</button>
+        </div>
+
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Cari do'a atau acara..." autocomplete="off">
+        </div>
+
+        <div class="category-scroll" id="categoryScroll"></div>
+
+        <div class="prayer-list" id="prayerList"></div>
+
+        <footer class="app-footer">
+            &copy; 2025 Kumpulan Do'a Berbagai Acara
+        </footer>
+    </div>
+
+    <!-- Modal Detail Do'a -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="close-btn" id="closeModal">✕</button>
+            <div class="modal-handle"></div>
+            <h2 class="modal-title" id="modalTitle">-</h2>
+            <span class="modal-category" id="modalCategory">-</span>
+            <div class="modal-arabic" id="modalArabic">-</div>
+            <div class="modal-latin" id="modalLatin">-</div>
+            <div class="modal-arti" id="modalArti">-</div>
+            <div class="modal-source" id="modalSource">-</div>
+            <div class="modal-actions" id="modalActions" style="display:none;">
+                <button class="btn-admin primary" id="editPrayerBtn" style="flex:1;">✏️ Edit</button>
+                <button class="btn-admin danger" id="deletePrayerBtn" style="flex:1;">🗑️ Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Form Tambah/Edit -->
+    <div class="modal-overlay" id="formOverlay">
+        <div class="modal-content">
+            <button class="close-btn" id="closeForm">✕</button>
+            <div class="modal-handle"></div>
+            <h2 class="modal-title" id="formTitle">Tambah Do'a Baru</h2>
+            <p style="font-size:0.75rem;color:rgba(238,245,255,0.5);margin-bottom:16px;">Isi data do'a dengan lengkap.</p>
+
+            <div class="form-group">
+                <label>Judul Do'a</label>
+                <input type="text" id="fTitle" placeholder="Contoh: Doa Acara Tasyakuran">
+            </div>
+
+            <div class="form-group">
+                <label>Kategori</label>
+                <input type="text" id="fCategory" list="categoryList" placeholder="Contoh: Tasyakuran / Pernikahan">
+                <datalist id="categoryList"></datalist>
+            </div>
+
+            <div class="form-group">
+                <label>Teks Arab</label>
+                <textarea id="fArabic" class="arabic-input" placeholder="اكتب النص العربي هنا..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Latin (Transliterasi)</label>
+                <textarea id="fLatin" placeholder="Bacaan latin..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Arti / Terjemahan</label>
+                <textarea id="fArti" placeholder="Terjemahan dalam Bahasa Indonesia..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Sumber</label>
+                <input type="text" id="fSource" placeholder="Contoh: HR. Bukhari & Muslim">
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-admin" id="cancelForm" style="flex:1;">Batal</button>
+                <button class="btn-admin primary" id="saveForm" style="flex:1;">💾 Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal PIN Login -->
+    <div class="modal-overlay pin-modal" id="pinOverlay">
+        <div class="modal-content">
+            <button class="close-btn" id="closePin">✕</button>
+            <div class="pin-icon">🔐</div>
+            <div class="pin-title">Login Admin</div>
+            <div class="pin-desc">Masukkan PIN untuk mengelola do'a</div>
+            <input type="password" class="pin-input" id="pinInput" maxlength="6" inputmode="numeric" placeholder="••••••" autocomplete="off">
+            <div class="pin-error" id="pinError"></div>
+            <button class="btn-admin primary" id="submitPin" style="width:100%;">Masuk</button>
+            <p style="font-size:0.68rem;color:rgba(238,245,255,0.4);margin-top:14px;text-align:center;">PIN default: <strong style="color:#ffd966;">123456</strong></p>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ============================================================
+        // KONFIGURASI
+        // ============================================================
+        const ADMIN_PIN = '123456'; // Ganti PIN di sini
+        const STORAGE_KEY = 'kumpulan_doa_data';
+        const SESSION_KEY = 'kumpulan_doa_admin';
+
+        // ============================================================
+        // DATA DEFAULT DO'A
+        // ============================================================
+        const defaultPrayers = [
+            {
+                id: 1,
+                title: "Bacaan Pembukaan Segala Acara",
+                category: "Pembukaan",
+                arabic: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ، وَالصَّلَاةُ وَالسَّلَامُ عَلَى أَشْرَفِ الْأَنْبِيَاءِ وَالْمُرْسَلِينَ، سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ. أَمَّا بَعْدُ",
+                latin: "Alhamdulillahi rabbil 'alamin, wash-shalatu was-salamu 'ala asyrafil anbiya'i wal mursalin, sayyidina Muhammadin wa 'ala alihi wa shahbihi ajma'in. Amma ba'du.",
+                arti: "Segala puji bagi Allah, Tuhan semesta alam. Shalawat dan salam semoga tercurah kepada Nabi dan Rasul paling mulia, junjungan kami Muhammad, beserta keluarga dan para sahabatnya semua. Amma ba'du.",
+                source: "HR. Abu Dawud"
+            },
+            {
+                id: 2,
+                title: "Mukadimah Taklim atau Pengajian",
+                category: "Pembukaan",
+                arabic: "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا، مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+                latin: "Innal hamda lillahi nahmaduhu wa nasta'inuhu wa nastaghfiruhu wa na'udzu billahi min syururi anfusina wa min sayyi'ati a'malina, man yahdihillahu fala mudhilla lah wa man yudhlil fala hadiya lah.",
+                arti: "Sesungguhnya segala puji bagi Allah, kami memuji-Nya, memohon pertolongan dan ampunan-Nya. Kami berlindung kepada Allah dari keburukan diri kami dan kejelekan amal perbuatan kami. Barangsiapa yang diberi petunjuk oleh Allah, maka tidak ada yang dapat menyesatkannya, dan barangsiapa yang disesatkan, maka tidak ada yang dapat memberinya petunjuk.",
+                source: "HR. Muslim"
+            },
+            {
+                id: 3,
+                title: "Mukadimah Acara Umum",
+                category: "Pembukaan",
+                arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ، الْحَمْدُ لِلَّهِ الَّذِي هَدَانَا لِهَٰذَا وَمَا كُنَّا لِنَهْتَدِيَ لَوْلَا أَنْ هَدَانَا اللَّهُ",
+                latin: "Bismillahir-rahmanir-rahim, alhamdulillahil-ladzi hadana lihadza wa ma kunna linahtadiya laula an hadanallah.",
+                arti: "Dengan menyebut nama Allah Yang Maha Pengasih lagi Maha Penyayang. Segala puji bagi Allah yang telah memberi kami petunjuk untuk ini, dan kami tidak akan mendapat petunjuk kalau bukan karena Allah yang memberi petunjuk kepada kami.",
+                source: "QS. Al-A'raf: 43"
+            },
+            {
+                id: 4,
+                title: "Doa Acara Tasyakuran Segala Acara",
+                category: "Tasyakuran",
+                arabic: "اللَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ، اللَّهُمَّ أَكْثِرْ أَمْوَالَنَا وَأَوْلَادَنَا وَبَارِكْ لَنَا فِيمَا أَعْطَيْتَنَا",
+                latin: "Allahumma barik lana fima razaqtana wa qina 'adzaban-nar. Allahumma aktsir amwalana wa auladana wa barik lana fima a'thaitana.",
+                arti: "Ya Allah, berkahilah kami pada apa yang telah Engkau rezekikan kepada kami, dan jagalah kami dari siksa api neraka. Ya Allah, perbanyaklah harta dan anak-anak kami, dan berkahilah kami pada apa yang telah Engkau berikan kepada kami.",
+                source: "HR. Bukhari & Muslim"
+            },
+            {
+                id: 5,
+                title: "Doa Acara Penyembelihan Hewan Qurban",
+                category: "Qurban",
+                arabic: "بِسْمِ اللَّهِ وَاللَّهُ أَكْبَرُ، اللَّهُمَّ هَذَا مِنْكَ وَلَكَ، تَقَبَّلْ مِنِّي",
+                latin: "Bismillahi wallahu akbar, Allahumma hadza minka wa laka, taqabbal minni.",
+                arti: "Dengan nama Allah dan Allah Maha Besar. Ya Allah, ini dari-Mu dan untuk-Mu, terimalah dariku.",
+                source: "HR. Muslim"
+            },
+            {
+                id: 6,
+                title: "Doa Tasyakuran Akikah",
+                category: "Akikah",
+                arabic: "اللَّهُمَّ احْفَظْهُ مِنْ شَرِّ الْجِنِّ وَالْإِنْسِ، اللَّهُمَّ بَارِكْ لَنَا فِي وَلَدِنَا وَاجْعَلْهُ مِنَ الصَّالِحِينَ",
+                latin: "Allahumma ihfazhhu min syarril jinni wal insi, Allahumma barik lana fi waladina waj'alhu minash-shalihin.",
+                arti: "Ya Allah, lindungilah ia dari kejahatan jin dan manusia. Ya Allah, berkahilah kami pada anak kami dan jadikanlah ia termasuk orang-orang yang shalih.",
+                source: "Doa Akikah"
+            },
+            {
+                id: 7,
+                title: "Doa Tasyakuran Khitan",
+                category: "Khitan",
+                arabic: "اللَّهُمَّ طَهِّرْ قَلْبَهُ وَحَصِّنْ فَرْجَهُ، وَبَارِكْ لَنَا فِيهِ",
+                latin: "Allahumma thahhir qalbahu wa hashshin farjahu, wa barik lana fihi.",
+                arti: "Ya Allah, sucikanlah hatinya dan jagalah kemaluannya, serta berkahilah kami padanya.",
+                source: "Doa Khitan"
+            },
+            {
+                id: 8,
+                title: "Doa Tasyakuran Lamaran/Khitbah",
+                category: "Pernikahan",
+                arabic: "بَارَكَ اللَّهُ لَكَ وَبَارَكَ عَلَيْكَ وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ",
+                latin: "Barakallahu laka wa baraka 'alaika wa jama'a bainakuma fi khair.",
+                arti: "Semoga Allah memberkahimu, dan semoga Allah melimpahkan berkah atasmu, dan semoga Allah mempersatukan kalian berdua dalam kebaikan.",
+                source: "HR. Tirmidzi"
+            },
+            {
+                id: 9,
+                title: "Doa Setelah Akad Nikah (Walimatul Urs)",
+                category: "Pernikahan",
+                arabic: "اللَّهُمَّ بَارِكْ لَهُمَا وَبَارِكْ عَلَيْهِمَا وَاجْمَعْ بَيْنَهُمَا فِي خَيْرٍ",
+                latin: "Allahumma barik lahuma wa barik 'alaihima wajma' bainahuma fi khair.",
+                arti: "Ya Allah, berkahilah keduanya, dan limpahkanlah berkah atas keduanya, dan satukanlah keduanya dalam kebaikan.",
+                source: "HR. Abu Dawud"
+            },
+            {
+                id: 10,
+                title: "Doa Ketika Halal Bihalal",
+                category: "Halal Bihalal",
+                arabic: "اللَّهُمَّ اغْفِرْ لَنَا وَلِوَالِدِينَا وَلِجَمِيعِ الْمُسْلِمِينَ، وَتَقَبَّلْ مِنَّا وَمِنْهُمْ صَالِحَ الْأَعْمَالِ",
+                latin: "Allahummaghfir lana wa liwalidina wa lijami'il muslimin, wa taqabbal minna wa minhum shalihal a'mal.",
+                arti: "Ya Allah, ampunilah kami, orang tua kami, dan seluruh kaum muslimin. Terimalah amal shaleh dari kami dan dari mereka.",
+                source: "Doa Halal Bihalal"
+            },
+            {
+                id: 11,
+                title: "Doa Acara Takziah (Pemberangkatan Jenazah)",
+                category: "Takziah",
+                arabic: "اللَّهُمَّ اغْفِرْ لَهُ وَارْحَمْهُ وَعَافِهِ وَاعْفُ عَنْهُ، وَأَكْرِمْ نُزُلَهُ وَوَسِّعْ مُدْخَلَهُ",
+                latin: "Allahummaghfir lahu warhamhu wa 'afihi wa'fu 'anhu, wa akrim nuzulahu wa wassi' mudkhalahu.",
+                arti: "Ya Allah, ampunilah dia, rahmatilah dia, selamatkanlah dan maafkanlah dia. Muliakanlah tempat singgahnya dan luaskanlah tempat masuknya.",
+                source: "HR. Muslim"
+            },
+            {
+                id: 12,
+                title: "Doa Setelah Penguburan Jenazah",
+                category: "Takziah",
+                arabic: "اللَّهُمَّ ثَبِّتْهُ بِالْقَوْلِ الثَّابِتِ فِي الْحَيَاةِ الدُّنْيَا وَفِي الْآخِرَةِ",
+                latin: "Allahumma tsabbit-hu bil qaulits-tsabiti fil hayatid-dunya wa fil akhirah.",
+                arti: "Ya Allah, tetapkanlah dia dengan perkataan yang teguh di kehidupan dunia dan di akhirat.",
+                source: "QS. Ibrahim: 27"
+            },
+            {
+                id: 13,
+                title: "Doa Khotbah Shalat Gerhana Bulan",
+                category: "Gerhana",
+                arabic: "إِنَّ الشَّمْسَ وَالْقَمَرَ آيَتَانِ مِنْ آيَاتِ اللَّهِ، لَا يَخْسِفَانِ لِمَوْتِ أَحَدٍ وَلَا لِحَيَاتِهِ، فَإِذَا رَأَيْتُمْ ذَلِكَ فَاذْكُرُوا اللَّهَ",
+                latin: "Innasy-syamsa wal qamara ayatani min ayatillah, la yakhsifani limauti ahadin wa la lihayatihi, fa idza ra'aitum dzalika fadzkurullah.",
+                arti: "Sesungguhnya matahari dan bulan adalah dua tanda dari tanda-tanda kebesaran Allah. Keduanya tidak mengalami gerhana karena kematian atau kehidupan seseorang. Maka apabila kamu melihat hal itu, berdzikirlah kepada Allah.",
+                source: "HR. Bukhari & Muslim"
+            },
+            {
+                id: 14,
+                title: "Doa Khotbah Shalat Gerhana Matahari",
+                category: "Gerhana",
+                arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ",
+                latin: "Allahumma inni as'alukal 'afwa wal 'afiyata fid dunya wal akhirah.",
+                arti: "Ya Allah, aku memohon kepada-Mu ampunan dan keselamatan di dunia dan akhirat.",
+                source: "HR. Abu Dawud"
+            },
+            {
+                id: 15,
+                title: "Doa Qunut Subuh",
+                category: "Shalat",
+                arabic: "اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ، وَعَافِنِي فِيمَنْ عَافَيْتَ، وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ، وَبَارِكْ لِي فِيمَا أَعْطَيْتَ، وَقِنِي شَرَّ مَا قَضَيْتَ",
+                latin: "Allahummahdini fiman hadait, wa 'afini fiman 'afait, wa tawallani fiman tawallait, wa barik li fima a'thait, wa qini syarra ma qadhait.",
+                arti: "Ya Allah, berilah aku petunjuk seperti orang-orang yang telah Engkau beri petunjuk. Berilah aku kesehatan seperti orang yang telah Engkau beri kesehatan. Peliharalah aku seperti orang-orang yang telah Engkau pelihara. Berkahilah aku pada apa yang telah Engkau berikan. Dan lindungilah aku dari kejahatan yang telah Engkau tetapkan.",
+                source: "HR. Tirmidzi"
+            },
+            {
+                id: 16,
+                title: "Doa dalam Acara Keislaman Seseorang",
+                category: "Keislaman",
+                arabic: "اللَّهُمَّ ثَبِّتْ قَلْبَهُ عَلَى دِينِكَ، وَاجْعَلْهُ مِنَ الْمُهْتَدِينَ",
+                latin: "Allahumma tsabbit qalbahu 'ala dinik, waj'alhu minal muhtadin.",
+                arti: "Ya Allah, tetapkanlah hatinya pada agama-Mu, dan jadikanlah ia termasuk orang-orang yang mendapat petunjuk.",
+                source: "Doa Keislaman"
+            },
+            {
+                id: 17,
+                title: "Doa Qunut Nazilah",
+                category: "Shalat",
+                arabic: "اللَّهُمَّ إِنَّا نَسْتَعِينُكَ وَنَسْتَغْفِرُكَ وَنُثْنِي عَلَيْكَ وَلَا نَكْفُرُكَ، وَنَخْلَعُ وَنَتْرُكُ مَنْ يَفْجُرُكَ",
+                latin: "Allahumma inna nasta'inuka wa nastaghfiruka wa nutsni 'alaika wa la nakfuruk, wa nakhla'u wa natruku man yafjuruk.",
+                arti: "Ya Allah, kami memohon pertolongan-Mu, memohon ampunan-Mu, memuji-Mu, tidak mengingkari-Mu, dan kami lepaskan serta tinggalkan orang yang durhaka kepada-Mu.",
+                source: "HR. Bukhari"
+            },
+            {
+                id: 18,
+                title: "Doa Melepas Keberangkatan Jamaah Haji",
+                category: "Haji",
+                arabic: "اللَّهُمَّ احْفَظْهُمْ فِي سَفَرِهِمْ وَأَعِنْهُمْ عَلَى أَدَاءِ مَنَاسِكِهِمْ وَتَقَبَّلْ مِنْهُمْ",
+                latin: "Allahumma ihfazhhum fi safarihim wa a'in-hum 'ala ada'i manasikihim wa taqabbal minhum.",
+                arti: "Ya Allah, lindungilah mereka dalam perjalanan mereka, bantulah mereka dalam melaksanakan manasik haji, dan terimalah amal mereka.",
+                source: "Doa Haji"
+            },
+            {
+                id: 19,
+                title: "Doa Menyambut Kepulangan Jamaah Haji",
+                category: "Haji",
+                arabic: "الْحَمْدُ لِلَّهِ الَّذِي رَدَّكَ إِلَى أَهْلِكَ سَالِمًا غَانِمًا، تَقَبَّلَ اللَّهُ حَجَّكَ وَسَعْيَكَ",
+                latin: "Alhamdulillahil-ladzi raddaka ila ahlika saliman ghaniman, taqabbalallahu hajjaka wa sa'yaka.",
+                arti: "Segala puji bagi Allah yang telah mengembalikanmu kepada keluargamu dengan selamat dan beruntung. Semoga Allah menerima haji dan sa'i-mu.",
+                source: "Doa Haji"
+            },
+            {
+                id: 20,
+                title: "Doa Setelah Shalat Istisqa",
+                category: "Shalat",
+                arabic: "اللَّهُمَّ أَغِثْنَا، اللَّهُمَّ أَغِثْنَا، اللَّهُمَّ أَغِثْنَا",
+                latin: "Allahumma aghitsna, Allahumma aghitsna, Allahumma aghitsna.",
+                arti: "Ya Allah, turunkanlah hujan kepada kami. Ya Allah, turunkanlah hujan kepada kami. Ya Allah, turunkanlah hujan kepada kami.",
+                source: "HR. Bukhari & Muslim"
+            },
+            {
+                id: 21,
+                title: "Doa Istighatsah",
+                category: "Shalat",
+                arabic: "اللَّهُمَّ إِنَّا نَسْأَلُكَ بِأَنَّكَ أَنْتَ اللَّهُ الْأَحَدُ الصَّمَدُ الَّذِي لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ",
+                latin: "Allahumma inna nas'aluka bi'annaka antallahul ahadush-shamadul-ladzi lam yalid wa lam yulad wa lam yakun lahu kufuwan ahad.",
+                arti: "Ya Allah, kami memohon kepada-Mu, karena Engkaulah Allah Yang Maha Esa, Yang Maha Dibutuhkan, yang tidak melahirkan dan tidak dilahirkan, dan tidak ada sesuatu pun yang setara dengan-Nya.",
+                source: "HR. Bukhari"
+            },
+            {
+                id: 22,
+                title: "Doa Saat Kehamilan",
+                category: "Keluarga",
+                arabic: "اللَّهُمَّ احْفَظْ وَلَدِي مَا دَامَ فِي بَطْنِي، وَاشْفِهِ وَعَافِهِ، وَأَخْرِجْهُ إِلَى الدُّنْيَا سَالِمًا",
+                latin: "Allahumma ihfazh waladi ma dama fi bathni, washfihi wa 'afihi, wa akhrijhu ilad-dunya saliman.",
+                arti: "Ya Allah, lindungilah anakku selama berada dalam perutku, sehatkanlah dan selamatkanlah dia, dan keluarkanlah dia ke dunia dengan selamat.",
+                source: "Doa Kehamilan"
+            },
+            {
+                id: 23,
+                title: "Doa Saat Proses Kelahiran",
+                category: "Keluarga",
+                arabic: "اللَّهُمَّ يَسِّرْ وِلَادَتَهَا وَاحْفَظْ وَلَدَهَا وَعَافِهَا",
+                latin: "Allahumma yassir wiladataha wahfazh waladaha wa 'afiha.",
+                arti: "Ya Allah, mudahkanlah proses kelahirannya, lindungilah anaknya, dan sehatkanlah dia.",
+                source: "Doa Kelahiran"
+            },
+            {
+                id: 24,
+                title: "Doa Melepas Safar Seseorang",
+                category: "Perjalanan",
+                arabic: "أَسْتَوْدِعُكَ اللَّهَ الَّذِي لَا يَضِيعُ وَدَائِعُهُ",
+                latin: "Astawdi'ukallaha al-ladzi la yadhi'u wada'i'uhu.",
+                arti: "Aku menitipkanmu kepada Allah yang tidak akan menyia-nyiakan titipan-Nya.",
+                source: "HR. Ahmad"
+            },
+            {
+                id: 25,
+                title: "Doa Peresmian Masjid",
+                category: "Bangunan",
+                arabic: "اللَّهُمَّ اجْعَلْ هَذَا الْمَسْجِدَ بَيْتًا لَكَ، وَمَكَانًا لِذِكْرِكَ، وَاجْعَلْنَا مِنْ عُمَّارِهِ",
+                latin: "Allahummaj'al hadzal masjida baitan laka, wa makanan lidzikrika, waj'alna min 'ummarin.",
+                arti: "Ya Allah, jadikanlah masjid ini sebagai rumah-Mu, tempat untuk berdzikir kepada-Mu, dan jadikanlah kami termasuk orang-orang yang memakmurkannya.",
+                source: "Doa Masjid"
+            },
+            {
+                id: 26,
+                title: "Doa untuk Rumah Baru",
+                category: "Bangunan",
+                arabic: "اللَّهُمَّ بَارِكْ لَنَا فِي بَيْتِنَا هَذَا، وَاجْعَلْهُ مَكَانًا لِلْخَيْرِ وَالسَّكِينَةِ",
+                latin: "Allahumma barik lana fi baitina hadza, waj'alhu makanan lil khairi was-sakinah.",
+                arti: "Ya Allah, berkahilah kami di rumah kami ini, dan jadikanlah ia tempat kebaikan dan ketenangan.",
+                source: "Doa Rumah"
+            },
+            {
+                id: 27,
+                title: "Doa Peresmian Bangunan Baru",
+                category: "Bangunan",
+                arabic: "اللَّهُمَّ بَارِكْ فِي هَذَا الْبِنَاءِ، وَاجْعَلْهُ نَافِعًا لِلنَّاسِ",
+                latin: "Allahumma barik fi hadzal bina', waj'alhu nafi'an lin-nas.",
+                arti: "Ya Allah, berkahilah bangunan ini, dan jadikanlah ia bermanfaat bagi manusia.",
+                source: "Doa Bangunan"
+            },
+            {
+                id: 28,
+                title: "Doa Pertemuan Keluarga Besar",
+                category: "Kemasyarakatan",
+                arabic: "اللَّهُمَّ أَلِّفْ بَيْنَ قُلُوبِنَا، وَأَصْلِحْ ذَاتَ بَيْنِنَا، وَاهْدِنَا سُبُلَ السَّلَامِ",
+                latin: "Allahumma allif baina qulubina, wa ashlih dzata bainina, wahdina subulas-salam.",
+                arti: "Ya Allah, satukanlah hati kami, perbaikilah hubungan di antara kami, dan tunjukilah kami jalan-jalan keselamatan.",
+                source: "HR. Abu Dawud"
+            },
+            {
+                id: 29,
+                title: "Doa Acara Perkumpulan Umum",
+                category: "Kemasyarakatan",
+                arabic: "اللَّهُمَّ بَارِكْ لَنَا فِي جَمْعِنَا هَذَا، وَاجْعَلْهُ جَمْعًا مَرْحُومًا",
+                latin: "Allahumma barik lana fi jam'ina hadza, waj'alhu jam'an marhuman.",
+                arti: "Ya Allah, berkahilah kami dalam perkumpulan kami ini, dan jadikanlah ia perkumpulan yang penuh rahmat.",
+                source: "Doa Perkumpulan"
+            },
+            {
+                id: 30,
+                title: "Doa Keselamatan Negeri",
+                category: "Kemasyarakatan",
+                arabic: "اللَّهُمَّ احْفَظْ بِلَادَنَا وَبِلَادَ الْمُسْلِمِينَ، وَأَصْلِحْ أَئِمَّتَنَا وَوُلَاةَ أُمُورِنَا",
+                latin: "Allahumma ihfazh biladana wa biladal muslimin, wa ashlih a'immatana wa wulata umurina.",
+                arti: "Ya Allah, lindungilah negeri kami dan negeri-negeri kaum muslimin, perbaikilah para pemimpin kami dan penguasa urusan kami.",
+                source: "Doa Keselamatan"
+            },
+            {
+                id: 31,
+                title: "Doa Keselamatan untuk Daerah Terkena Musibah",
+                category: "Kemasyarakatan",
+                arabic: "اللَّهُمَّ ارْحَمْ أَهْلَ الْمُصِيبَةِ، وَاجْبُرْ كَسْرَهُمْ، وَاشْفِ مَرْضَاهُمْ",
+                latin: "Allahummarham ahlal mushibah, wajbur kasrahum, wasyfi mardhahum.",
+                arti: "Ya Allah, rahmatilah penduduk yang tertimpa musibah, perbaikilah keadaan mereka, dan sembuhkanlah orang-orang sakit di antara mereka.",
+                source: "Doa Musibah"
+            },
+            {
+                id: 32,
+                title: "Doa Menjenguk Orang Sakit",
+                category: "Kesehatan",
+                arabic: "اللَّهُمَّ رَبَّ النَّاسِ، أَذْهِبِ الْبَأْسَ، اشْفِ أَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا",
+                latin: "Allahumma rabban-nas, adzhibil ba'sa, isyfi antasy-syafi, la syifa'a illa syifa'uka, syifa'an la yughadiru saqaman.",
+                arti: "Ya Allah, Tuhan manusia, hilangkanlah penyakit ini. Sembuhkanlah, Engkaulah Yang Maha Penyembuh. Tidak ada kesembuhan kecuali kesembuhan dari-Mu, kesembuhan yang tidak meninggalkan penyakit.",
+                source: "HR. Bukhari & Muslim"
+            },
+            {
+                id: 33,
+                title: "Doa Peresmian Perusahaan Baru",
+                category: "Perusahaan",
+                arabic: "اللَّهُمَّ بَارِكْ لَنَا فِي هَذِهِ الشَّرِكَةِ، وَاجْعَلْهَا مَصْدَرَ خَيْرٍ وَرِزْقٍ حَلَالٍ",
+                latin: "Allahumma barik lana fi hadzihisy-syarikah, waj'alha mashdara khairin wa rizqin halal.",
+                arti: "Ya Allah, berkahilah kami dalam perusahaan ini, dan jadikanlah ia sumber kebaikan dan rezeki yang halal.",
+                source: "Doa Perusahaan"
+            },
+            {
+                id: 34,
+                title: "Doa Rapat Kerja Tahunan Perusahaan",
+                category: "Perusahaan",
+                arabic: "اللَّهُمَّ وَفِّقْنَا فِي أَعْمَالِنَا، وَبَارِكْ لَنَا فِي اجْتِمَاعِنَا، وَاهْدِنَا إِلَى الصَّوَابِ",
+                latin: "Allahumma waffiqna fi a'malina, wa barik lana fi ijtima'ina, wahdina ilash-shawab.",
+                arti: "Ya Allah, berilah kami taufik dalam pekerjaan kami, berkahilah kami dalam rapat kami, dan tunjukilah kami ke jalan yang benar.",
+                source: "Doa Rapat"
+            },
+            {
+                id: 35,
+                title: "Doa Gathering Acara Perusahaan",
+                category: "Perusahaan",
+                arabic: "اللَّهُمَّ اجْعَلْ جَمْعَنَا هَذَا جَمْعًا مَرْحُومًا، وَتَفَرُّقَنَا مِنْ بَعْدِهِ تَفَرُّقًا مَعْصُومًا",
+                latin: "Allahummaj'al jam'ana hadza jam'an marhuman, wa tafarruqana min ba'dihi tafarruqan ma'shuman.",
+                arti: "Ya Allah, jadikanlah pertemuan kami ini pertemuan yang penuh rahmat, dan perpisahan kami setelahnya perpisahan yang terjaga.",
+                source: "HR. Abu Dawud"
+            },
+            {
+                id: 36,
+                title: "Doa Acara Pelantikan Jabatan",
+                category: "Perusahaan",
+                arabic: "اللَّهُمَّ أَعِنْهُ عَلَى مَا وَلَّيْتَهُ، وَوَفِّقْهُ لِخِدْمَةِ النَّاسِ، وَاجْعَلْهُ عَدْلًا فِي حُكْمِهِ",
+                latin: "Allahumma a'inhu 'ala ma wallaitahu, wa waffiqhu likhidmatin-nas, waj'alhu 'adlan fi hukmihi.",
+                arti: "Ya Allah, bantulah dia dalam tugas yang Engkau berikan, berilah taufik untuk melayani manusia, dan jadikanlah dia adil dalam keputusannya.",
+                source: "Doa Jabatan"
+            },
+            {
+                id: 37,
+                title: "Doa Acara Purna Tugas",
+                category: "Perusahaan",
+                arabic: "اللَّهُمَّ اشْكُرْ لَهُ مَا قَدَّمَ، وَاجْزِهِ خَيْرَ الْجَزَاءِ، وَبَارِكْ لَهُ فِي حَيَاتِهِ",
+                latin: "Allahummasykur lahu ma qaddama, wajzihi khairal jaza', wa barik lahu fi hayatihi.",
+                arti: "Ya Allah, terimalah apa yang telah ia lakukan, berilah balasan terbaik, dan berkahilah kehidupannya.",
+                source: "Doa Purna Tugas"
+            },
+            {
+                id: 38,
+                title: "Doa Memulai Pelajaran",
+                category: "Sekolah",
+                arabic: "اللَّهُمَّ افْتَحْ عَلَيْنَا حِكْمَتَكَ، وَانْشُرْ عَلَيْنَا مِنْ خَزَائِنِ رَحْمَتِكَ، يَا أَرْحَمَ الرَّاحِمِينَ",
+                latin: "Allahummaftah 'alaina hikmataka, wansyur 'alaina min khaza'ini rahmatika, ya arhamar-rahimin.",
+                arti: "Ya Allah, bukakanlah hikmah-Mu kepada kami, dan limpahkanlah kepada kami dari perbendaharaan rahmat-Mu, wahai Yang Maha Penyayang.",
+                source: "Doa Belajar"
+            },
+            {
+                id: 39,
+                title: "Doa Acara Awal Tahun Ajaran Baru",
+                category: "Sekolah",
+                arabic: "اللَّهُمَّ اجْعَلْ هَذَا الْعَامَ عَامَ خَيْرٍ وَبَرَكَةٍ، وَوَفِّقْنَا فِيهِ لِلْعِلْمِ النَّافِعِ",
+                latin: "Allahummaj'al hadzal 'ama 'ama khairin wa barakah, wa waffiqna fihi lil 'ilmin-nafi'.",
+                arti: "Ya Allah, jadikanlah tahun ini tahun kebaikan dan keberkahan, dan berilah kami taufik untuk menuntut ilmu yang bermanfaat.",
+                source: "Doa Tahun Baru"
+            },
+            {
+                id: 40,
+                title: "Doa Acara Kelulusan/Akhirussanah",
+                category: "Sekolah",
+                arabic: "اللَّهُمَّ بَارِكْ لِطُلَّابِنَا فِي عِلْمِهِمْ، وَاجْعَلْهُمْ مِنَ النَّافِعِينَ الْمُخْلِصِينَ",
+                latin: "Allahumma barik li thullabina fi 'ilmihim, waj'alhum minan-nafi'in al-mukhlisin.",
+                arti: "Ya Allah, berkahilah para siswa kami dalam ilmu mereka, dan jadikanlah mereka termasuk orang-orang yang bermanfaat dan ikhlas.",
+                source: "Doa Kelulusan"
+            },
+            {
+                id: 41,
+                title: "Doa Apel atau Upacara",
+                category: "Sekolah",
+                arabic: "اللَّهُمَّ اجْعَلْنَا مِنَ الْمُؤْمِنِينَ الصَّادِقِينَ، وَاجْعَلْ أَعْمَالَنَا خَالِصَةً لِوَجْهِكَ الْكَرِيمِ",
+                latin: "Allahummaj'alna minal mu'mininash-shadiqin, waj'al a'malana khalishatan liwajhika al-karim.",
+                arti: "Ya Allah, jadikanlah kami termasuk orang-orang mukmin yang jujur, dan jadikanlah amal perbuatan kami ikhlas untuk wajah-Mu yang mulia.",
+                source: "Doa Upacara"
+            }
+        ];
+
+        // ============================================================
+        // STATE & STORAGE
+        // ============================================================
+        let prayersData = [];
+        let currentCategory = 'Semua';
+        let searchQuery = '';
+        let isAdmin = false;
+        let editingId = null;
+
+        // Load data dari localStorage atau default
+        function loadData() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    prayersData = JSON.parse(stored);
+                } else {
+                    prayersData = [...defaultPrayers];
+                    saveData();
+                }
+            } catch (e) {
+                prayersData = [...defaultPrayers];
+            }
+        }
+
+        function saveData() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(prayersData));
+            } catch (e) {
+                showToast('Gagal menyimpan data', true);
+            }
+        }
+
+        function getNextId() {
+            return prayersData.length > 0 ? Math.max(...prayersData.map(p => p.id)) + 1 : 1;
+        }
+
+        // ============================================================
+        // DOM REFS
+        // ============================================================
+        const categoryScroll = document.getElementById('categoryScroll');
+        const prayerList = document.getElementById('prayerList');
+        const searchInput = document.getElementById('searchInput');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const closeModal = document.getElementById('closeModal');
+        const formOverlay = document.getElementById('formOverlay');
+        const pinOverlay = document.getElementById('pinOverlay');
+        const adminBadge = document.getElementById('adminBadge');
+
+        // ============================================================
+        // TOAST
+        // ============================================================
+        let toastTimer;
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast show' + (isError ? ' error' : '');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.className = 'toast';
+            }, 2200);
+        }
+
+        // ============================================================
+        // AUTH
+        // ============================================================
+        function checkSession() {
+            isAdmin = sessionStorage.getItem(SESSION_KEY) === 'true';
+            updateAdminUI();
+        }
+
+        function setSession(val) {
+            if (val) {
+                sessionStorage.setItem(SESSION_KEY, 'true');
+            } else {
+                sessionStorage.removeItem(SESSION_KEY);
+            }
+            isAdmin = val;
+            updateAdminUI();
+        }
+
+        function updateAdminUI() {
+            const loginBtn = document.getElementById('loginBtn');
+            const addBtn = document.getElementById('addBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (isAdmin) {
+                loginBtn.style.display = 'none';
+                addBtn.style.display = 'flex';
+                logoutBtn.style.display = 'flex';
+                adminBadge.textContent = 'Admin';
+                adminBadge.style.color = '#ffd966';
+                adminBadge.style.background = 'rgba(255, 215, 120, 0.2)';
+            } else {
+                loginBtn.style.display = 'flex';
+                addBtn.style.display = 'none';
+                logoutBtn.style.display = 'none';
+                adminBadge.textContent = 'Publik';
+                adminBadge.style.color = '#ffd966';
+                adminBadge.style.background = 'rgba(255, 215, 120, 0.15)';
+            }
+        }
+
+        // ============================================================
+        // RENDER
+        // ============================================================
+        function getCategories() {
+            return ['Semua', ...new Set(prayersData.map(p => p.category))];
+        }
+
+        function renderCategories() {
+            const categories = getCategories();
+            categoryScroll.innerHTML = categories.map(cat => `
+                <div class="category-chip ${cat === currentCategory ? 'active' : ''}" data-category="${cat}">
+                    ${cat}
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.category-chip').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    currentCategory = chip.dataset.category;
+                    renderCategories();
+                    renderPrayers();
+                });
+            });
+
+            // Update datalist
+            const datalist = document.getElementById('categoryList');
+            datalist.innerHTML = categories.filter(c => c !== 'Semua').map(c => `<option value="${c}">`).join('');
+        }
+
+        function getFilteredPrayers() {
+            return prayersData.filter(prayer => {
+                const matchCategory = currentCategory === 'Semua' || prayer.category === currentCategory;
+                const q = searchQuery.toLowerCase();
+                const matchSearch = searchQuery === '' ||
+                    prayer.title.toLowerCase().includes(q) ||
+                    prayer.category.toLowerCase().includes(q) ||
+                    prayer.arti.toLowerCase().includes(q);
+                return matchCategory && matchSearch;
+            });
+        }
+
+        function renderPrayers() {
+            const filtered = getFilteredPrayers();
+
+            if (filtered.length === 0) {
+                prayerList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🔍</div>
+                        <p>Do'a tidak ditemukan</p>
+                    </div>
+                `;
+                return;
+            }
+
+            prayerList.innerHTML = filtered.map(prayer => `
+                <div class="prayer-card" data-id="${prayer.id}">
+                    <div class="card-header">
+                        <span class="card-title">${escapeHtml(prayer.title)}</span>
+                        <span class="card-category">${escapeHtml(prayer.category)}</span>
+                    </div>
+                    <div class="card-preview">${escapeHtml(prayer.arti)}</div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.prayer-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    showPrayerDetail(parseInt(card.dataset.id));
+                });
+            });
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str || '';
+            return div.innerHTML;
+        }
+
+        // ============================================================
+        // DETAIL MODAL
+        // ============================================================
+        let currentDetailId = null;
+
+        function showPrayerDetail(id) {
+            const prayer = prayersData.find(p => p.id === id);
+            if (!prayer) return;
+
+            currentDetailId = id;
+            document.getElementById('modalTitle').textContent = prayer.title;
+            document.getElementById('modalCategory').textContent = prayer.category;
+            document.getElementById('modalArabic').textContent = prayer.arabic;
+            document.getElementById('modalLatin').textContent = prayer.latin;
+            document.getElementById('modalArti').innerHTML = `<strong>Artinya:</strong> ${escapeHtml(prayer.arti)}`;
+            document.getElementById('modalSource').textContent = `Sumber: ${prayer.source}`;
+
+            // Tampilkan tombol edit/hapus jika admin
+            document.getElementById('modalActions').style.display = isAdmin ? 'flex' : 'none';
+
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModalFunc() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ============================================================
+        // FORM MODAL (Tambah/Edit)
+        // ============================================================
+        function openForm(prayer = null) {
+            editingId = prayer ? prayer.id : null;
+            document.getElementById('formTitle').textContent = prayer ? 'Edit Do\'a' : 'Tambah Do\'a Baru';
+            document.getElementById('fTitle').value = prayer ? prayer.title : '';
+            document.getElementById('fCategory').value = prayer ? prayer.category : '';
+            document.getElementById('fArabic').value = prayer ? prayer.arabic : '';
+            document.getElementById('fLatin').value = prayer ? prayer.latin : '';
+            document.getElementById('fArti').value = prayer ? prayer.arti : '';
+            document.getElementById('fSource').value = prayer ? prayer.source : '';
+
+            formOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeForm() {
+            formOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            editingId = null;
+        }
+
+        function saveForm() {
+            const title = document.getElementById('fTitle').value.trim();
+            const category = document.getElementById('fCategory').value.trim();
+            const arabic = document.getElementById('fArabic').value.trim();
+            const latin = document.getElementById('fLatin').value.trim();
+            const arti = document.getElementById('fArti').value.trim();
+            const source = document.getElementById('fSource').value.trim();
+
+            if (!title || !category || !arabic || !arti) {
+                showToast('Judul, kategori, arab, dan arti wajib diisi', true);
+                return;
+            }
+
+            if (editingId) {
+                const idx = prayersData.findIndex(p => p.id === editingId);
+                if (idx !== -1) {
+                    prayersData[idx] = { id: editingId, title, category, arabic, latin, arti, source };
+                }
+                showToast('Do\'a berhasil diperbarui ✓');
+            } else {
+                prayersData.push({
+                    id: getNextId(),
+                    title, category, arabic, latin, arti, source
+                });
+                showToast('Do\'a berhasil ditambahkan ✓');
+            }
+
+            saveData();
+            closeForm();
+            renderCategories();
+            renderPrayers();
+
+            // Refresh detail modal jika terbuka
+            if (modalOverlay.classList.contains('active') && editingId) {
+                showPrayerDetail(editingId);
+            }
+        }
+
+        // ============================================================
+        // PIN MODAL
+        // ============================================================
+        function openPin() {
+            document.getElementById('pinInput').value = '';
+            document.getElementById('pinError').textContent = '';
+            pinOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => document.getElementById('pinInput').focus(), 300);
+        }
+
+        function closePin() {
+            pinOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function submitPin() {
+            const pin = document.getElementById('pinInput').value.trim();
+            if (pin === ADMIN_PIN) {
+                setSession(true);
+                closePin();
+                showToast('Login berhasil. Selamat datang Admin! ✓');
+            } else {
+                document.getElementById('pinError').textContent = 'PIN salah. Coba lagi.';
+                document.getElementById('pinInput').value = '';
+                document.getElementById('pinInput').focus();
+            }
+        }
+
+        // ============================================================
+        // EVENT LISTENERS
+        // ============================================================
+        function bindEvents() {
+            // Detail modal
+            closeModal.addEventListener('click', closeModalFunc);
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) closeModalFunc();
+            });
+
+            // Edit / delete dari detail modal
+            document.getElementById('editPrayerBtn').addEventListener('click', () => {
+                const prayer = prayersData.find(p => p.id === currentDetailId);
+                if (prayer) {
+                    closeModalFunc();
+                    setTimeout(() => openForm(prayer), 250);
+                }
+            });
+
+            document.getElementById('deletePrayerBtn').addEventListener('click', () => {
+                if (!currentDetailId) return;
+                if (confirm('Yakin ingin menghapus do\'a ini?')) {
+                    prayersData = prayersData.filter(p => p.id !== currentDetailId);
+                    saveData();
+                    closeModalFunc();
+                    renderCategories();
+                    renderPrayers();
+                    showToast('Do\'a berhasil dihapus ✓');
+                }
+            });
+
+            // Form modal
+            document.getElementById('closeForm').addEventListener('click', closeForm);
+            document.getElementById('cancelForm').addEventListener('click', closeForm);
+            document.getElementById('saveForm').addEventListener('click', saveForm);
+            formOverlay.addEventListener('click', (e) => {
+                if (e.target === formOverlay) closeForm();
+            });
+
+            // Pin modal
+            document.getElementById('closePin').addEventListener('click', closePin);
+            document.getElementById('submitPin').addEventListener('click', submitPin);
+            document.getElementById('pinInput').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') submitPin();
+            });
+            pinOverlay.addEventListener('click', (e) => {
+                if (e.target === pinOverlay) closePin();
+            });
+
+            // Admin bar
+            document.getElementById('loginBtn').addEventListener('click', openPin);
+            document.getElementById('addBtn').addEventListener('click', () => openForm());
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                setSession(false);
+                showToast('Logout berhasil');
+            });
+
+            // Search
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                renderPrayers();
+            });
+
+            // Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (modalOverlay.classList.contains('active')) closeModalFunc();
+                    if (formOverlay.classList.contains('active')) closeForm();
+                    if (pinOverlay.classList.contains('active')) closePin();
+                }
+            });
+        }
+
+        // ============================================================
+        // WEBGL BACKGROUND
+        // ============================================================
+        function initWebGL() {
+            const canvas = document.getElementById('bg-canvas');
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 30;
+
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 600;
+            const positions = new Float32Array(particlesCount * 3);
+            const colors = new Float32Array(particlesCount * 3);
+
+            for (let i = 0; i < particlesCount * 3; i += 3) {
+                positions[i] = (Math.random() - 0.5) * 80;
+                positions[i + 1] = (Math.random() - 0.5) * 80;
+                positions[i + 2] = (Math.random() - 0.5) * 80;
+
+                colors[i] = 0.85 + Math.random() * 0.15;
+                colors[i + 1] = 0.7 + Math.random() * 0.3;
+                colors[i + 2] = 0.2 + Math.random() * 0.3;
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.3,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.7,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false,
+                sizeAttenuation: true
+            });
+
+            const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particles);
+
+            let time = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                time += 0.0005;
+                particles.rotation.y = time * 0.5;
+                particles.rotation.x = Math.sin(time * 0.3) * 0.1;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        function init() {
+            initWebGL();
+            loadData();
+            checkSession();
+            bindEvents();
+            renderCategories();
+            renderPrayers();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+</body>
+</html>
